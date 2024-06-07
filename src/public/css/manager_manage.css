@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700;900&display=swap');
+
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+* {
+    line-height: 1.2;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0
+}
+
+body {
+    font-size: 1.6rem;
+    font-weight: 400;
+    background: #f5f5f5;
+    color: #000;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: "Noto Sans JP", sans-serif, Arial;
+}
+
+img {
+    max-width: 100%;
+    border-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+.header {
+    width: 100%;
+    background-color: #333333;
+    color: #fff;
+    padding: 25px 0;
+}
+
+.header_inner {
+    max-width: 1230px;
+}
+
+.header-ttl {
+    font-size: 3.2rem;
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+}
+
+.header a {
+    color: #fff;
+}
+
+.main {
+    padding: 5px 5px 10px;
+    margin: 0 auto;
+}
+
+/* 代表者検索・作成 */
+
+.manager-information {
+    max-width: 1230px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+}
+
+.form-contents {
+    border: #808080 solid 2px;
+    padding: 50px 10px;
+    margin-top: 50px;
+}
+
+h2 {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.manager__alert--success,
+.alert {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 2.3rem;
+    color: #333333;
+}
+
+/* ショップ検索 */
+
+.manager-search {
+    margin: 0 auto;
+}
+
+.search-contents {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.search-item label {
+    width: 70px;
+    display: inline-block;
+}
+
+.search-item input {
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    outline: none;
+}
+
+.search-item select {
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    outline: none;
+}
+
+.search-button {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.search-button button {
+    padding: 10px 100px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-size: 1.8rem;
+    border: none;
+    background: #808080;
+    color: #fff;
+}
+
+/* 新規作成 */
+
+.manager-create {
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.manager-create__contents {
+    display: flex;
+    justify-content: center;
+}
+
+.create-item label {
+    width: 150px;
+    display: inline-block;
+}
+
+.create-item_shop label {
+    width: 150px;
+    display: inline-block;
+}
+
+.create-item_shop input {
+    display: inline-block;
+    width: 250px;
+    height: 30px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.create-item select {
+    display: inline-block;
+    width: 250px;
+    height: 30px;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.create-item_birthday label {
+    width: 150px;
+    display: inline-block;
+}
+
+.create-item_birthday input {
+    display: inline-block;
+    width: 250px;
+    height: 30px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.create-item_postcode label {
+    width: 150px;
+    display: inline-block;
+}
+
+.create-item_postcode input {
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.create-item input {
+    display: inline-block;
+    width: 500px;
+    height: 30px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.shop-category {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 10px;
+}
+
+.create-button {
+    text-align: center;
+}
+
+.create-button button {
+    padding: 10px 100px;
+    margin-top: 30px;
+    font-size: 1.8rem;
+    border: none;
+    background: #808080;
+    color: #fff;
+}
+
+.error-message {
+    color: red;
+    margin-left: 10px;
+}
+
+/* ----------------テーブル部分---------------- */
+
+.manager-list {
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.manager-table {
+    width: 100%;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.manager-table th {
+    border-bottom: 1px solid #000;
+}
+
+th,
+td {
+    padding: 10px 10px;
+}
+
+.table-title {
+    height: 60px;
+}
+
+.manager-table input {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+}
+
+.table-id {
+    width: 10%;
+}
+
+.table-id input {
+    width: 100%;
+}
+
+.table-area {
+    width: 20%;
+}
+
+.table-area input {
+    width: 100%;
+}
+
+.table-shop {
+    width: 20%;
+}
+
+.table-shop input {
+    width: 100%;
+}
+
+.table-name {
+    width: 20%;
+}
+
+.table-name input {
+    width: 100%;
+}
+
+.table-mail {
+    width: 30%;
+}
+
+.table-mail input {
+    width: 100%;
+}
+
+/* -------------ページネーション------------- */
+
+.table-page {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.pagination li {
+    display: block;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    float: left;
+}
+
+.pagination li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.pagination .active {
+    background-color: #0066ff;
+    border: 1px solid #0066ff;
+    color: white;
+}
+
+.pagination li:hover:not(.active, .disabled) {
+    background-color: #ddd;
+}

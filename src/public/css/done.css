@@ -1,0 +1,52 @@
+.done__content {
+    margin: 0 auto;
+    padding: 0;
+    max-width: 530px;
+}
+
+.done__card {
+    margin: 30px auto 0;
+    padding: 100px 0;
+    background: #fff;
+    box-shadow: 3px 3px 3px #a9a9a9;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.login__button {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    padding-bottom: 30px;
+}
+
+.login__button-link {
+    padding: 6px 20px;
+    font-size: 1.6rem;
+    border: none;
+    border-radius: 5px;
+    background: #0066ff;
+    cursor: pointer;
+}
+
+a {
+    color: #fff;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 28px;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    .done__content {
+        max-width: 450px;
+    }
+
+    h1 {
+        font-size: 2.3rem;
+    }
+
+}

@@ -1,0 +1,110 @@
+.icon {
+    font-size: 3rem;
+    color: #4f4f4f;
+}
+
+.form__content {
+    margin: 0 auto;
+    padding: 0;
+    max-width: 500px;
+}
+
+.login__form {
+    margin: 150px auto 0;
+    width: 100%;
+    background: #fff;
+    box-shadow: 3px 3px 3px #a9a9a9;
+    border-radius: 5px;
+    z-index: 89;
+    position: relative;
+}
+
+.login__form::before {
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    font-size: 2rem;
+    color: #fff;
+    content: "Login";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: #0066ff;
+    border-radius: 5px 5px 0 0;
+    z-index: 90;
+}
+
+.form {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form__group {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 3px;
+}
+
+.form__group:first-of-type {
+    padding-top: 100px;
+}
+
+.form__group-title {
+    width: 15%;
+}
+
+.form__group-content {
+    width: 85%;
+}
+
+.form__error {
+    height: 20px;
+    color: #ff0000;
+    text-align: left;
+}
+
+.form__input--text input {
+    width: 100%;
+    height: 30px;
+    font-size: 1.6rem;
+    border: none;
+    border-bottom: 2px solid #000;
+    outline: none;
+}
+
+.form__button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    padding-bottom: 30px;
+    padding-right: 5%;
+}
+
+.form__button-submit {
+    padding: 8px 20px;
+    font-size: 1.6rem;
+    border: none;
+    border-radius: 5px;
+    background: #0066ff;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    .form__content {
+        max-width: 450px;
+    }
+
+    .login__form {
+        margin: 80px auto 0;
+    }
+
+}

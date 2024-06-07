@@ -1,0 +1,71 @@
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+* {
+    line-height: 1.2;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0
+}
+
+body {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #000;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 30px;
+    max-width: 600px;
+}
+
+.card-info {
+    border: #cccccc solid 1px;
+    border-radius: 10px;
+    padding: 20px 30px;
+    position: relative;
+}
+
+.card-header {
+    text-align: center;
+    background-color: #cccccc;
+    border: #cccccc solid 1px;
+    border: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    padding: 15px;
+}
+
+.card-body {
+    margin-top: 50px;
+}
+
+.form-control {
+    border: #cccccc solid 1px;
+    padding: 5px 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.pay_btn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: none;
+    background: #cccccc;
+    font-size: 1.6rem;
+}
+
+.alert {
+    text-align: center;
+    color: blue;
+}

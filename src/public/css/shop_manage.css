@@ -1,0 +1,268 @@
+.shop-information {
+    max-width: 1230px;
+    margin: 0 auto;
+}
+
+.form-contents {
+    border: #808080 solid 2px;
+    padding: 50px 10px;
+    margin-top: 50px;
+}
+
+h2 {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.shop__alert--success {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 2.3rem;
+    color: #0066ff;
+}
+
+/* ショップ検索 */
+
+.shop-search {
+    margin: 0 auto;
+}
+
+.search-contents {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.search-item label {
+    width: 70px;
+    display: inline-block;
+}
+
+.search-item input {
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    outline: none;
+}
+
+.search-item select {
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    outline: none;
+}
+
+.search-button {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.search-button button {
+    padding: 10px 100px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-size: 1.8rem;
+    border: none;
+    background: #0000cd;
+    color: #fff;
+}
+
+/* 新規作成 */
+
+.shop-create {
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.shop-create__contents {
+    display: flex;
+    justify-content: center;
+}
+
+.create-item label {
+    width: 110px;
+    display: inline-block;
+}
+
+.create-item input {
+    display: inline-block;
+    width: 300px;
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+.create-item select {
+    display: inline-block;
+    width: 300px;
+    height: 30px;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.create-item__image label {
+    width: 110px;
+    display: inline-block;
+}
+
+.create-item__image input {
+    display: inline-block;
+    width: 500px;
+    height: 30px;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+textarea {
+    display: inline-block;
+    width: 500px;
+    height: 100px;
+    vertical-align: middle;
+    outline: none;
+}
+
+.create-button {
+    text-align: center;
+}
+
+.create-button button {
+    padding: 10px 100px;
+    margin-top: 30px;
+    font-size: 1.8rem;
+    border: none;
+    background: #0000cd;
+    color: #fff;
+}
+
+.error-message {
+    color: red;
+    margin-left: 10px;
+}
+
+/* ----------------テーブル部分---------------- */
+
+.shop-list {
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.shop-table {
+    width: 100%;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.shop-table th {
+    border-bottom: 1px solid #000;
+}
+
+th,
+td {
+    padding: 10px 10px;
+}
+
+.table-title {
+    height: 60px;
+}
+
+.shop-table input {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+}
+
+.table-name {
+    width: 20%;
+}
+
+.table-name input {
+    width: 100%;
+}
+
+.table-area {
+    width: 15%;
+}
+
+.table-area input {
+    width: 100%;
+}
+
+.table-genre {
+    width: 15%;
+}
+
+.table-genre input {
+    width: 100%;
+}
+
+.table-image {
+    width: 20%;
+}
+
+.table-image input {
+    width: 100%;
+    text-overflow: ellipsis;
+}
+
+.table-image input:hover {
+    white-space: normal;
+    width: 700px;
+}
+
+.table-description {
+    width: 20%;
+}
+
+.table-description input {
+    width: 100%;
+    text-overflow: ellipsis;
+}
+
+.table-description input:hover {
+    white-space: normal;
+    width: 700px;
+}
+
+.update {
+    width: 10%;
+}
+
+.update button {
+    width: 80px;
+    height: 30px;
+    font-size: 1.6rem;
+    color: #ffffff;
+    background-color: #0000cd;
+    border: none;
+    border-radius: 5px;
+}
+
+/* -------------ページネーション------------- */
+
+.table-page {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.pagination li {
+    display: block;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    float: left;
+}
+
+.pagination li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.pagination .active {
+    background-color: #0066ff;
+    border: 1px solid #0066ff;
+    color: white;
+}
+
+.pagination li:hover:not(.active, .disabled) {
+    background-color: #ddd;
+}

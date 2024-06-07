@@ -1,0 +1,53 @@
+.thanks__content {
+    margin: 0 auto;
+    padding: 0;
+    max-width: 530px;
+}
+
+.thanks__card {
+    margin: 30px auto 0;
+    padding: 100px 0;
+    background: #fff;
+    box-shadow: 3px 3px 3px #a9a9a9;
+    border-radius: 5px;
+}
+
+.login__button {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    padding-bottom: 30px;
+}
+
+.login__button--link {
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 5px;
+    background: #0066ff;
+    cursor: pointer;
+}
+
+a {
+    color: #fff;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 2.8rem;
+    white-space: nowrap;
+    text-align: center;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    .thanks__content {
+        max-width: 450px;
+    }
+
+    h1 {
+        font-size: 2.3rem;
+    }
+
+}

@@ -1,0 +1,263 @@
+.mypage {
+    text-align: center;
+}
+
+.reserve__alert--success {
+    color: red;
+    font-size: 2rem;
+}
+
+.mypage__content {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 60px;
+}
+
+.reservation__status {
+    width: 45%;
+}
+
+.reservation__status h2 {
+    text-align: left;
+}
+
+.reservation__status-icon {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 35px;
+}
+
+.icon__clock--size,
+.icon__delete--size {
+    font-size: 2.5rem;
+}
+
+.icon__delete {
+    background: none;
+    border: none;
+    color: #fff;
+}
+
+.icon__clock--size::after {
+    content: "予約";
+    font-size: 1.6rem;
+    padding-left: 30px;
+    vertical-align: middle;
+}
+
+.icon__clock span {
+    vertical-align: text-top;
+}
+
+.reservation__form {
+    position: relative;
+    margin-top: 35px;
+    background: #0066ff;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    color: #fff;
+    padding: 35px 35px 80px;
+    text-align: left;
+}
+
+.form-title {
+    display: inline-block;
+    width: 20%;
+    color: #fff;
+    margin-bottom: 12px;
+    margin-right: 11px;
+    white-space: nowrap;
+    text-align: left;
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+}
+
+.confirm__name input {
+    display: inline-block;
+    border: none;
+    outline: none;
+    background: none;
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+}
+
+.confirm__date input,
+.confirm__time input {
+    display: inline-block;
+    border: none;
+    outline-color: #fff;
+    background: none;
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+}
+
+.confirm__number input {
+    width: 20px;
+    display: inline-block;
+    border: none;
+    outline-color: #fff;
+    background: none;
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+}
+
+.confirm__number::after {
+    content: "人";
+}
+
+.reservation__change--btn {
+    display: block;
+    padding: 20px 0;
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #0033ff;
+    border: none;
+    border-radius: 0 0 5px 5px;
+    color: #fff;
+    font-size: 1.6rem;
+}
+
+/* お気に入り店舗一覧 */
+
+.favorite__store {
+    width: 50%;
+}
+
+.favorite__store h2 {
+    text-align: left;
+    white-space: nowrap;
+}
+
+.favorite__store-list {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+
+.shop__card {
+    width: 48%;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.shop__img img {
+    object-fit: cover;
+    width: 100%;
+    height: 150px;
+    border-radius: 8px 8px 0 0;
+}
+
+.card__content {
+    padding: 13px 25px;
+}
+
+.card__ttl {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.tag {
+    display: flex;
+    gap: 5px;
+}
+
+.card__tag--area,
+.card__tag--genre {
+    font-size: 1.3rem;
+    white-space: nowrap;
+    border: none;
+    background: none;
+}
+
+.card__review {
+    margin-top: 8px;
+    text-align: left;
+}
+
+.card__review button {
+    border: none;
+    background: none;
+    font-size: 1.8rem;
+}
+
+.card__button {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card__button--details {
+    border: none;
+    padding: 8px 12px;
+    background: #0066ff;
+    margin-bottom: 13px;
+    display: inline-block;
+    color: #fff;
+    font-size: 1.4rem;
+    white-space: nowrap;
+    border-radius: 5px;
+}
+
+.card__button--like {
+    border: none;
+    background: none;
+    color: #dcdcdc;
+    font-size: 3rem;
+}
+
+.favorite {
+    color: red;
+}
+
+.not-favorite {
+    color: #dcdcdc;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    .user-name {
+        font-size: 2.8rem;
+    }
+
+    .mypage__content {
+        margin: 0 auto;
+        display: block;
+        max-width: 500px;
+    }
+
+    .reservation__status {
+        width: 100%;
+        margin-top: 35px;
+    }
+
+    .form-title {
+        margin-right: 20px;
+    }
+
+    .favorite__store {
+        width: 100%;
+        margin-top: 35px;
+    }
+
+    .shop__card {
+        width: 48%;
+    }
+
+    .card__content {
+        padding: 13px 15px;
+    }
+
+}

@@ -1,0 +1,247 @@
+.review-content {
+    position: relative;
+    display: flex;
+}
+
+/* ショップ情報 */
+
+.shop_info {
+    margin-top: 90px;
+    width: 45%;
+}
+
+h1 {
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 60px;
+    width: 70%;
+    font-size: 4rem;
+    font-weight: 500;
+}
+
+.shop__card {
+    margin: 0 auto;
+    width: 60%;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.shop__img img {
+    object-fit: cover;
+    width: 100%;
+    height: 150px;
+    border-radius: 8px 8px 0 0;
+}
+
+.card__content {
+    padding: 13px 25px;
+}
+
+.card__review {
+    margin-top: 8px;
+}
+
+.card__review button {
+    border: none;
+    background: none;
+    font-size: 1.8rem;
+}
+
+.card__ttl {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.tag {
+    display: flex;
+    gap: 5px;
+}
+
+.card__tag--area,
+.card__tag--genre {
+    border: none;
+    background: none;
+    font-size: 1.3rem;
+    white-space: nowrap;
+}
+
+.card__button {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card__button--details {
+    border: none;
+    padding: 8px 12px;
+    background: #0066ff;
+    margin-bottom: 13px;
+    display: inline-block;
+    color: #fff;
+    font-size: 1.4rem;
+    white-space: nowrap;
+    border-radius: 5px;
+}
+
+.card__button--like {
+    border: none;
+    background: none;
+    color: #dcdcdc;
+    font-size: 3rem;
+}
+
+.favorite {
+    color: red;
+}
+
+.not-favorite {
+    color: #dcdcdc;
+}
+
+.vertical-line {
+    border-left: 1px solid #000;
+    margin-left: 20px;
+    margin-top: 100px;
+    height: 470px;
+}
+
+/* レビュー */
+.review-form {
+    width: 55%;
+    margin-top: 30px;
+    margin-left: 50px;
+    padding: 10px;
+}
+
+h3 {
+    font-size: 2.3rem;
+}
+
+.star-rating {
+    margin-top: 10px;
+}
+
+.review-input {
+    margin-top: 30px;
+}
+
+textarea {
+    margin-top: 20px;
+    background: none;
+    padding: 10px;
+    width: 80%;
+    height: 200px;
+    outline: none;
+}
+
+::placeholder {
+    color: #666666;
+}
+
+.character-limit {
+    width: 80%;
+    text-align: right;
+    font-size: 1.3rem;
+}
+
+.review-form h3:nth-of-type(2) {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* .dropzone .large-text {
+    font-size: 2rem;
+    line-height: 4rem;
+    font-weight: 700;
+}
+
+.dropzone .small-text {
+    font-size: 1.5rem;
+} */
+
+.review-btn {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    margin-top: 100px;
+    padding-bottom: 100px;
+}
+
+.review-btn button {
+    margin: 0 auto;
+    width: 50%;
+    display: block;
+    padding: 15px 30px;
+    border-radius: 20px;
+    border: none;
+    background: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.error-message {
+    margin-top: 5px;
+    color: red;
+}
+
+.alert {
+    margin-top: 30px;
+    text-align: center;
+    color: red;
+    font-size: 1.8rem;
+}
+
+.review__alert {
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 767px) {
+    .review-content {
+        padding: 5px;
+        display: block;
+    }
+
+    .shop_info {
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    h1 {
+        width: 100%;
+        font-size: 3rem;
+    }
+
+    hr {
+        margin-top: 50px;
+    }
+
+    .review-form {
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .star-rating {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+    .character-limit {
+        width: 100%;
+        text-align: right;
+        font-size: 1.3rem;
+    }
+
+    .review-btn button {
+        width: 100%;
+    }
+
+}
