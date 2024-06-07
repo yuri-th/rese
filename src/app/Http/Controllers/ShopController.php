@@ -87,31 +87,69 @@ class ShopController extends Controller
     public function search_area(Request $request)
     {
         $shop_cards = Shop::with('areas')->AreaSearch($request->area_id)->get();
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
         $user = Auth::id();
         $favorite_shops = Like::where('user_id', $user)->get();
-        return view('index', ['shop_cards' => $shop_cards], ['favorite_shops' => $favorite_shops]);
+
+        return view('index', [
+            'shop_cards' => $shop_cards,
+            'favorite_shops' => $favorite_shops,
+            'averageRatings' => $averageRatings
+        ]);
     }
 
     // ジャンル検索
     public function search_genre(Request $request)
     {
         $shop_cards = Shop::with('genres')->GenreSearch($request->genre_id)->get();
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
         $user = Auth::id();
         $favorite_shops = Like::where('user_id', $user)->get();
-        return view('index', ['shop_cards' => $shop_cards], ['favorite_shops' => $favorite_shops]);
+
+        return view('index', [
+            'shop_cards' => $shop_cards,
+            'favorite_shops' => $favorite_shops,
+            'averageRatings' => $averageRatings
+        ]);
     }
 
     // 店名検索
     public function search_name(Request $request)
     {
         $shop_cards = $shop_cards = Shop::KeywordSearch($request->name)->get();
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
         $user = Auth::id();
         $favorite_shops = Like::where('user_id', $user)->get();
 
         if ($shop_cards->isEmpty()) {
             return view('index', ['shop_cards' => $shop_cards, 'favorite_shops' => $favorite_shops, 'message' => 'データがありません']);
         } else {
-            return view('index', ['shop_cards' => $shop_cards, 'favorite_shops' => $favorite_shops]);
+            return view('index', [
+                'shop_cards' => $shop_cards,
+                'favorite_shops' => $favorite_shops,
+                'averageRatings' => $averageRatings
+            ]);
         }
     }
 
@@ -147,8 +185,11 @@ class ShopController extends Controller
 
     // 店舗管理：店舗情報の表示
 
-    public function shopmanage()
+    public function shopmanage(Request $request)
     {
+        // if ($request->user()->role !== 'store') {
+        //     abort(403, '権限がありません');
+        // }
         $shop_infos = Shop::paginate(10);
         return view('/manage/shop_manage', ['shop_infos' => $shop_infos]);
     }
