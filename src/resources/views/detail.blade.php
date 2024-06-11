@@ -221,6 +221,7 @@
     new Vue({
         el: '#userStars',
         data: {
+            rating: 0,
             selectedRating: {{ isset($review) ?$review-> stars : 0 }},
         isStarsChanged: false
         },

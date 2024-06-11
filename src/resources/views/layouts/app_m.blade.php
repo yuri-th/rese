@@ -23,6 +23,7 @@
                 <ul class="header-nav-list">
                     <li class="header-nav-item"><a href="/manage/shop_manage">店舗情報</a></li>
                     <li class="header-nav-item"><a href="/manage/reserve_manage">予約情報</a></li>
+                    <li class="header-nav-item"><a href="/manage/reserve_manage">ログアウト</a></li>
                 </ul>
             </nav>
         </div>
