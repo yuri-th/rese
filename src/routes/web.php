@@ -65,30 +65,32 @@ Route::prefix('manage')->group(function () {
 });
 
 // 管理者用ルート
-// Route::prefix('manage/manager_manage')->group(function () {
-//     Route::get('login', [LoginController::class, 'create'])->name('admin.login');
-//     Route::post('login', [LoginController::class, 'store']);
+Route::prefix('manage/manager_manage')->group(function () {
+    Route::get('login', [LoginController::class, 'create'])->name('admin.login');
+    Route::post('login', [LoginController::class, 'store']);
 
-//     Route::middleware('auth:admin')->group(function () {
-//         Route::get('/', [ManagerController::class, 'manager']);
-//         Route::post('/', [ManagerController::class, 'create']);
-//         Route::get('/search', [ManagerController::class, 'manager_search']);
-//     });
-// });
-Route::middleware('auth:admin')->group(function () {
-    Route::prefix('manage/manager_manage')->group(function () {
-        Route::get('/', function () {
-            return redirect()->route('admin.login');
-        });
-        Route::get('login', [LoginController::class, 'create'])->name('admin.login');
-        Route::post('login', [LoginController::class, 'store']);
-
-        Route::middleware('auth:admin')->group(function () {
-            Route::get('/', [ManagerController::class, 'manager']);
-            Route::get('/search', [ManagerController::class, 'manager_search']);
-        });
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/', [ManagerController::class, 'manager']);
+        Route::post('/', [ManagerController::class, 'create']);
+        Route::get('/search', [ManagerController::class, 'manager_search']);
+        Route::post('logout', [LoginController::class, 'destroy'])->name('admin.logout');
     });
 });
+
+// Route::middleware('auth:admin')->group(function () {
+//     Route::prefix('manage/manager_manage')->group(function () {
+//         Route::get('/', function () {
+//             return redirect()->route('admin.login');
+//         });
+//         Route::get('login', [LoginController::class, 'create'])->name('admin.login');
+//         Route::post('login', [LoginController::class, 'store']);
+
+//         Route::middleware('auth:admin')->group(function () {
+//             Route::get('/', [ManagerController::class, 'manager']);
+//             Route::get('/search', [ManagerController::class, 'manager_search']);
+//         });
+//     });
+// });
 
 
 // Shop画像のアップロード
