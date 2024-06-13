@@ -19,7 +19,7 @@
                 </a>
                 <form action="{{ route('admin.logout') }}" method="post">
                     @csrf
-                    <button class="header__nav--button">Logout</button>
+                    <button class="header__logout--button">Logout</button>
                 </form>
             </div>
         </div>

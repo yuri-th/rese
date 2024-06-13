@@ -9,6 +9,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ShopLoginController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 
 
 
@@ -38,6 +41,8 @@ Route::middleware('verified')->group(function () {
     Route::post('/reserve/delete', [ReservationController::class, 'delete']);
     Route::get('/done', [ReservationController::class, 'create']);
     Route::get('/mypage', [UserController::class, 'mypage']);
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
 });
 
 // 一般公開ページ
@@ -50,18 +55,31 @@ Route::get('/detail/{shop}', [ShopController::class, 'detail']);
 Route::get('/review', [ShopController::class, 'review']);
 
 // 管理システム
-
+// 店舗代表者用ルート
 Route::prefix('manage')->group(function () {
-    // 店舗代表者用ルート
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/shop_manage', [ShopController::class, 'shopmanage']);
-    Route::post('/shop_manage', [ShopController::class, 'create'])->name('shopmanage');
-    Route::patch('/shop_manage/update', [ShopController::class, 'update']);
-    Route::get('/shop_manage/update', [ShopController::class, 'update']);
-    Route::get('/shop_manage/search', [ShopController::class, 'search_shop']);
-    Route::get('/reserve_manage', [ReservationController::class, 'reserveManage']);
-    Route::get('/reserve_manage/search', [ReservationController::class, 'search_reserve']);
-    Route::post('/reserve_manage/mail', [ReservationController::class, 'mail']);
+    Route::get('login', [ShopLoginController::class, 'create'])->name('shop.login');
+    Route::post('login', [ShopLoginController::class, 'store']);
+
+    Route::prefix('shop_manage')->group(function () {
+        Route::middleware('auth:shop_manager')->group(function () {
+            Route::get('/', [ShopController::class, 'shopmanage']);
+            Route::post('/', [ShopController::class, 'create'])->name('shopmanage');
+            Route::patch('/update', [ShopController::class, 'update']);
+            Route::get('/update', [ShopController::class, 'update']);
+            Route::get('/search', [ShopController::class, 'search_shop']);
+            // Route::post('logout', [ShopLoginController::class, 'destroy'])->name('shop.logout');
+            Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+                ->name('shop.logout');
+        });
+    });
+    Route::middleware('auth:shop_manager')->group(function () {
+        Route::get('/reserve_manage', [ReservationController::class, 'reserveManage']);
+        Route::get('/reserve_manage/search', [ReservationController::class, 'search_reserve']);
+        Route::post('/reserve_manage/mail', [ReservationController::class, 'mail']);
+        // Route::post('logout', [ShopLoginController::class, 'destroy'])->name('shop.logout');
+        Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+            ->name('shop.logout');
+    });
 });
 
 // 管理者用ルート
@@ -73,25 +91,11 @@ Route::prefix('manage/manager_manage')->group(function () {
         Route::get('/', [ManagerController::class, 'manager']);
         Route::post('/', [ManagerController::class, 'create']);
         Route::get('/search', [ManagerController::class, 'manager_search']);
-        Route::post('logout', [LoginController::class, 'destroy'])->name('admin.logout');
+        // Route::post('logout', [LoginController::class, 'destroy'])->name('admin.logout');
+        Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+            ->name('admin.logout');
     });
 });
-
-// Route::middleware('auth:admin')->group(function () {
-//     Route::prefix('manage/manager_manage')->group(function () {
-//         Route::get('/', function () {
-//             return redirect()->route('admin.login');
-//         });
-//         Route::get('login', [LoginController::class, 'create'])->name('admin.login');
-//         Route::post('login', [LoginController::class, 'store']);
-
-//         Route::middleware('auth:admin')->group(function () {
-//             Route::get('/', [ManagerController::class, 'manager']);
-//             Route::get('/search', [ManagerController::class, 'manager_search']);
-//         });
-//     });
-// });
-
 
 // Shop画像のアップロード
 Route::prefix('upload')->group(function () {
@@ -102,7 +106,7 @@ Route::prefix('upload')->group(function () {
 // stripe決済
 Route::prefix('payment')->name('payment.')->group(function () {
     Route::get('/stripe', [PaymentController::class, 'create'])->name('create');
-    Route::post('/store', [PaymentController::class, 'store'])->name('store');
+    Route::post('/store', [PaymentController::class, 'store'])->name('');
 });
 
 
