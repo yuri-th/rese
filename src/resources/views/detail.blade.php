@@ -98,6 +98,13 @@
                     <div class="review-comment">
                         <input type="text" name="comment" value="{{$review->comment}}" />
                     </div>
+                    <div class="review-image">
+                    @if(isset($review->image_path))
+                    <img src="{{ asset($review->image_path) }}" alt="Review Image">
+                    @else
+                    <p>No image available</p>
+                    @endif
+                    </div>
                     <input type="hidden" name="review_id" value="{{$review->id}}" />
                     <button type="submit" class="edit_btn">口コミを編集</button>
                 </form>

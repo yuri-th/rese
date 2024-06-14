@@ -57,6 +57,15 @@ li {
     margin-bottom: 30px;
 }
 
+.header__logout--button{
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 20px;
+    font-family: inherit;
+    font-weight: 500;
+}
+
 .header a {
     color: #fff;
 }
