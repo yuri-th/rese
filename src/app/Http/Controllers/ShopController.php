@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ShopRequest;
 use App\Http\Requests\ReviewRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -264,11 +265,21 @@ class ShopController extends Controller
         $shop_infos = Shop::where('id', $shop_id)->get();
         $reviews = ShopReview::where('shop_id', $shop_id)->where('user_id', $user)->get();
         $favorite_shops = Like::where('user_id', $user)->get();
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
 
         return view('review', [
             'shop_infos' => $shop_infos,
             'reviews' => $reviews,
-            'favorite_shops' => $favorite_shops
+            'favorite_shops' => $favorite_shops,
+            'averageRatings' => $averageRatings,
         ]);
     }
 
@@ -307,21 +318,27 @@ class ShopController extends Controller
             if ($currentDate > $dateTime) {
                 $stars = $request->input('stars');
                 $comment = $request->input('comment');
+                $imageUrls = [];
 
                 // ファイルがアップロードされているかを確認
-                if ($request->hasFile('file') && $request->file('file')->isValid()) {
-                    $request->validate([
-                        'file' => 'image|mimes:jpg,png,jpeg|max:2048',
-                    ]);
+                if ($request->hasFile('files')) {
+                    Log::info('Files found');
+                    foreach ($request->file('files') as $file) {
+                        if ($file->isValid()) {
+                            $request->validate([
+                                'files.*' => 'image|mimes:jpg,png,jpeg|max:2048',
+                            ]);
 
-                    $file = $request->file('file');
-                    $fileName = $file->getClientOriginalName();
-                    $file->storeAs('public/images', $fileName);
-                    $imageUrl = Storage::url('public/images/' . $fileName);
-
-                } else {
-                    $imageUrl = '';
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs('public/images', $fileName);
+                            $imageUrls[] = Storage::url($filePath);
+                        }
+                    }
                 }
+
+                // 複数のファイルがアップロードされた場合の処理
+                $imageUrl = count($imageUrls) > 0 ? implode(',', $imageUrls) : '';
+                // dd($imageUrl);
 
                 ShopReview::create([
                     'shop_id' => $shop_id,

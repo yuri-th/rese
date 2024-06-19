@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('js')
-<script src="https://unpkg.com/vue-star-rating/dist/VueStarRating.umd.min.js"></script>
-@endsection
-
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
 @endsection
@@ -71,28 +67,15 @@
                 <form action="/review/update" method="post">
                     @csrf
                     <div class="star">
-                        <div class="star-comment">
-                            @if ($review->stars == 5)
-                            大変満足
-                            @elseif ($review->stars == 4)
-                            満足
-                            @elseif ($review->stars == 3)
-                            普通
-                            @elseif ($review->stars == 2)
-                            やや不満
-                            @else
-                            不満
-                            @endif
-                        </div>
-                        <div id="userStars" class="star-rating">
-                            @if(isset($review))
+                        @if(isset($review))
+                        <div class="star-rating" data-review-stars="{{ $review->stars }}">
                             <star-rating :rating="selectedRating" :increment="1" :max-rating="5"
                                 inactive-color="#c0c0c0" active-color="#daa520" :star-size="30" :show-rating="false"
                                 :padding="1" @rating-selected="updateRating" data-review-stars="{{ $review->stars }}">
                             </star-rating>
                             <input type="hidden" name="stars" v-model="selectedRating" />
-                            @endif
                         </div>
+                        @endif
                     </div>
 
                     <div class="review-comment">
@@ -110,35 +93,19 @@
                 </form>
             </div>
             @endforeach
-
             <!-- 他のユーザーのレビューを非表示で表示 -->
             <div id="otherReviews" class="other-user-post" style="display: none;">
                 @foreach ($other_reviews as $other_review)
                 <hr>
                 <div class="star">
-                    <div class="star-comment">
-                        @if ($other_review->stars == 5)
-                        大変満足
-                        @elseif ($other_review->stars == 4)
-                        満足
-                        @elseif ($other_review->stars == 3)
-                        普通
-                        @elseif ($other_review->stars == 2)
-                        やや不満
-                        @else
-                        不満
-                        @endif
-                    </div>
-
-                    <div id="otherUserStars" class="star-rating">
-                        @if(isset($other_review))
+                    @if(isset($other_review))
+                    <div class="star-rating" data-review-stars="{{ $other_review->stars }}">
                         <star-rating :rating="{{ $other_review->stars }}" :increment="1" :max-rating="5"
                             inactive-color="#c0c0c0" active-color="#daa520" :star-size="30" :show-rating="false"
                             :padding="1" :read-only="true">
                         </star-rating>
-                        @endif
                     </div>
-
+                    @endif
                 </div>
                 <div class="review-comment">
                     {{$other_review->comment}}
@@ -223,43 +190,8 @@
     </div>
 </div>
 
-<script>
-    Vue.component('star-rating', VueStarRating.default);
-    new Vue({
-        el: '#userStars',
-        data: {
-            rating: 0,
-            selectedRating: {{ isset($review) ?$review-> stars : 0 }},
-        isStarsChanged: false
-        },
-        methods: {
-        updateRating(rating) {
-            this.selectedRating = rating;
-            this.isStarsChanged = true;
-        }
-    }
-    });
-
-</script>
-<script>
-    Vue.component('star-rating', VueStarRating.default);
-    new Vue({
-        el: '#otherUserStars',
-        data: {
-            rating: 0,
-            selectedRating: {{isset($other_review) ?$other_review-> stars : 0 }},
-        isStarsChanged: false
-        },
-        methods: {
-        updateRating(rating) {
-            this.selectedRating = rating;
-            this.isStarsChanged = true;
-        }
-    }
-    });
-</script>
-
 <script src="{{ asset('js/reserve.js') }}"></script>
-<script src="{{ asset('js/review.js') }}"></script>
+<script src="{{ asset('js/detail.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 
 @endsection

@@ -100,7 +100,6 @@ Route::prefix('manage/manager_manage')->group(function () {
 // Shop画像のアップロード
 Route::prefix('upload')->group(function () {
     Route::post('/review', [ShopController::class, 'upload']);
-    // Route::post('/review', [ShopController::class, 'upload_image']);
 });
 
 // stripe決済
