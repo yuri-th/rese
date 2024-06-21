@@ -23,17 +23,17 @@ class FortifyServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
-        public function toResponse($request)
-        {
-            return view('auth.verify-email');
-        }
+            public function toResponse($request)
+            {
+                return view('auth.verify-email');
+            }
         });
 
         $this->app->instance(VerifyEmailResponse::class, new class implements VerifyEmailResponse {
-        public function toResponse($request)
-        {
-            return redirect('/thanks');
-        }
+            public function toResponse($request)
+            {
+                return redirect('/thanks');
+            }
         });
     }
 
@@ -44,21 +44,21 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::registerView(function () {
-         return view('auth.register');
-     });
+            return view('auth.register');
+        });
 
         Fortify::loginView(function () {
-         return view('auth.login');
-     });
+            return view('auth.login');
+        });
 
         RateLimiter::for('login', function (Request $request) {
-         $email = (string) $request->email;
-         return Limit::perMinute(10)->by($email . $request->ip());
-     });
+            $email = (string) $request->email;
+            return Limit::perMinute(10)->by($email . $request->ip());
+        });
 
-     Fortify::VerifyEmailView(function () {       
-        Auth::guard()->logout();
-        return view('auth.verify-email');
-     });  
+        Fortify::VerifyEmailView(function () {
+            Auth::guard()->logout();
+            return view('auth.verify-email');
+        });
     }
 }

@@ -95,6 +95,7 @@
             @endforeach
             <!-- 他のユーザーのレビューを非表示で表示 -->
             <div id="otherReviews" class="other-user-post" style="display: none;">
+            @if ($other_reviews)
                 @foreach ($other_reviews as $other_review)
                 <hr>
                 <div class="star">
@@ -111,6 +112,7 @@
                     {{$other_review->comment}}
                 </div>
                 @endforeach
+                @endif
             </div>
         </div>
     </div>

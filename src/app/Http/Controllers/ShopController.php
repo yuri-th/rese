@@ -51,13 +51,21 @@ class ShopController extends Controller
     public function detail(Shop $shop)
     {
         $user = Auth::id();
-        $shop_record = Shop::where('id', $shop->id)->get();
-        $reviews = ShopReview::where('shop_id', $shop->id)->where('user_id', $user)->get();
+        $user_role = optional(Auth::user())->role;
+        Log::info('User Role:', ['role' => $user_role]);
 
-        // 他のユーザーのレビューを取得
-        $other_reviews = ShopReview::where('shop_id', $shop->id)
-            ->where('user_id', '!=', $user)
-            ->get();
+        $shop_record = Shop::where('id', $shop->id)->get();
+        $other_reviews = '';
+
+        // 管理者の場合は全てのレビューを取得
+        if ($user_role === 'admin') {
+            $reviews = ShopReview::where('shop_id', $shop->id)->get();
+        } else {
+            $reviews = ShopReview::where('shop_id', $shop->id)->where('user_id', $user)->get();
+            $other_reviews = ShopReview::where('shop_id', $shop->id)
+                ->where('user_id', '!=', $user)
+                ->get();
+        }
 
         return view('detail', [
             'shop_records' => $shop_record,
@@ -185,12 +193,8 @@ class ShopController extends Controller
     // }
 
     // 店舗管理：店舗情報の表示
-
     public function shopmanage(Request $request)
     {
-        // if ($request->user()->role !== 'store') {
-        //     abort(403, '権限がありません');
-        // }
         $shop_infos = Shop::paginate(10);
         return view('/manage/shop_manage', ['shop_infos' => $shop_infos]);
     }
@@ -362,13 +366,21 @@ class ShopController extends Controller
     public function review_update(Request $request)
     {
         $user = Auth::id();
+        $user_role = Auth::user()->role;
         $stars = $request->input('stars');
         $comment = $request->input('comment');
         $review_id = $request->input('review_id');
-        ShopReview::where('id', $review_id)->where('user_id', $user)->update([
-            'stars' => $stars,
-            'comment' => $comment,
-        ]);
+
+        if ($user_role !== 'user') {
+            return back()->with('update_message', '投稿者以外は編集できません');
+        }
+
+        if ($user_role === 'user') {
+            ShopReview::where('id', $review_id)->where('user_id', $user)->update([
+                'stars' => $stars,
+                'comment' => $comment,
+            ]);
+        }
         return back()->with('update_message', 'レビューを更新しました');
     }
 
@@ -376,11 +388,15 @@ class ShopController extends Controller
     public function review_delete(Request $request)
     {
         $user = Auth::id();
+        $user_role = Auth::user()->role;
         $review_id = $request->input('review_id');
 
-        ShopReview::where('id', $review_id)->where('user_id', $user)->delete();
+        if ($user_role === 'admin') {
+            ShopReview::where('id', $review_id)->delete();
+        } else {
+            ShopReview::where('id', $review_id)->where('user_id', $user)->delete();
+        }
         return back()->with('delete_message', 'レビューを削除しました');
-
     }
 
 }

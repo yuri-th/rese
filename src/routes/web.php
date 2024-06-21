@@ -31,7 +31,6 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::middleware('verified')->group(function () {
     Route::get('/thanks', [AuthController::class, 'thanks']);
-    // Route::post('/review', [ShopController::class, 'upload'])->name('upload');
     Route::post('/review/post', [ShopController::class, 'review_post']);
     Route::post('/review/update', [ShopController::class, 'review_update']);
     Route::post('/review/delete', [ShopController::class, 'review_delete']);
