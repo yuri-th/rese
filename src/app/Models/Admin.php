@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-// class User extends Authenticatable
-class User extends Authenticatable implements MustVerifyEmail
+class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -23,7 +20,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'role',
     ];
 
     /**
@@ -44,19 +40,4 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function likes()
-    {
-        return $this->hasMany('App\Models\Like');
-    }
-
-    public function reservations()
-    {
-        return $this->hasMany('App\Models\Reservation');
-    }
-
-    public function shops(): BelongsToMany
-    {
-        return $this->belongsToMany(Shop::class);
-    }
 }

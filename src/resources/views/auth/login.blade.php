@@ -7,7 +7,11 @@
 @section('content')
 <div class="form__content">
   <div class="login__form">
-    <form class="form" action="/login" method="post">
+    <form class="form" method="post" action="{{
+  isset($guard) && $guard == 'admin' ? route('admin.login') :
+  (isset($guard) && $guard == 'shop_manager' ? route('shop.login') :
+    route('login'))
+}}">
       @csrf
       <div class="form__group">
         <div class="form__group-title">
@@ -19,8 +23,8 @@
           </div>
           <div class="form__error">
             @error('email')
-            {{ $message }}
-            @enderror
+        {{ $message }}
+      @enderror
           </div>
         </div>
       </div>
@@ -34,8 +38,8 @@
           </div>
           <div class="form__error">
             @error('password')
-            {{ $message }}
-            @enderror
+        {{ $message }}
+      @enderror
           </div>
         </div>
       </div>

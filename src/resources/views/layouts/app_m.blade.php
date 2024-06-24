@@ -23,6 +23,11 @@
                 <ul class="header-nav-list">
                     <li class="header-nav-item"><a href="/manage/shop_manage">店舗情報</a></li>
                     <li class="header-nav-item"><a href="/manage/reserve_manage">予約情報</a></li>
+                    <!-- <li class="header-nav-item"><a href="/manage/reserve_manage">ログアウト</a></li> -->
+                    <form action="{{ route('shop.logout') }}" method="post">
+                        @csrf
+                        <button class="header__logout--button">Logout</button>
+                    </form>
                 </ul>
             </nav>
         </div>
@@ -31,4 +36,5 @@
         @yield('content')
     </main>
 </body>
+
 </html>

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ShopRequest;
 use App\Http\Requests\ReviewRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -37,8 +38,6 @@ class ShopController extends Controller
                 $averageRatings[$shop_id] = $ratings;
             }
         }
-        // デバッグ用: $averageRatings の内容をログに記録
-        \Log::info('Average Ratings: ', $averageRatings);
 
         return view('index', [
             'shop_cards' => $shop_cards,
@@ -50,13 +49,21 @@ class ShopController extends Controller
     public function detail(Shop $shop)
     {
         $user = Auth::id();
-        $shop_record = Shop::where('id', $shop->id)->get();
-        $reviews = ShopReview::where('shop_id', $shop->id)->where('user_id', $user)->get();
+        $user_role = optional(Auth::user())->role;
+        // Log::info('User Role:', ['role' => $user_role]);
 
-        // 他のユーザーのレビューを取得
-        $other_reviews = ShopReview::where('shop_id', $shop->id)
-            ->where('user_id', '!=', $user)
-            ->get();
+        $shop_record = Shop::where('id', $shop->id)->get();
+        $other_reviews = '';
+
+        // 管理者の場合は全てのレビューを取得
+        if ($user_role === 'admin') {
+            $reviews = ShopReview::where('shop_id', $shop->id)->get();
+        } else {
+            $reviews = ShopReview::where('shop_id', $shop->id)->where('user_id', $user)->get();
+            $other_reviews = ShopReview::where('shop_id', $shop->id)
+                ->where('user_id', '!=', $user)
+                ->get();
+        }
 
         return view('detail', [
             'shop_records' => $shop_record,
@@ -65,53 +72,126 @@ class ShopController extends Controller
         ]);
     }
 
-    // ソート検索
+    // 各種ソート検索
     public function search_sort(Request $request)
     {
         $sort = $request->input('sort', 'default');
+        $query = Shop::with('reviews');
+        // 評価のあるお店を取得してソート
+        $shop_cards_with_ratings = $query->get()->filter(function ($shop) {
+            return $shop->averageRating() > 0; // 評価があるお店のみをフィルタリング
+        });
 
         if ($sort === '2') {
-            $shop_cards = ShopReview::with('shop')
-                ->orderBy('stars', 'asc')
-                ->get();
-        } else {
-            $shop_cards = ShopReview::all();
+            $shop_cards_with_ratings = $shop_cards_with_ratings->sortByDesc(function ($shop) {
+                return $shop->averageRating();
+            });
+        } elseif ($sort === '3') {
+            $shop_cards_with_ratings = $shop_cards_with_ratings->sortBy(function ($shop) {
+                return $shop->averageRating();
+            });
+        }
+
+        // 評価のないお店を取得
+        $shop_cards_without_ratings = $query->get()->filter(function ($shop) {
+            return $shop->averageRating() === 0;
+        });
+
+        // 評価のあるお店の後に評価のないお店を追加
+        $shop_cards = $shop_cards_with_ratings->merge($shop_cards_without_ratings);
+
+        // ランダムソート
+        if ($sort === '1') {
+            $shop_cards = $shop_cards->shuffle();
         }
 
         $user = Auth::id();
         $favorite_shops = Like::where('user_id', $user)->get();
-        return view('index', ['shop_cards' => $shop_cards], ['favorite_shops' => $favorite_shops]);
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
+
+        return view('index', [
+            'shop_cards' => $shop_cards,
+            'favorite_shops' => $favorite_shops,
+            'sort' => $sort,
+            'averageRatings' => $averageRatings,
+        ]);
     }
 
     // エリア検索
     public function search_area(Request $request)
     {
         $shop_cards = Shop::with('areas')->AreaSearch($request->area_id)->get();
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
         $user = Auth::id();
         $favorite_shops = Like::where('user_id', $user)->get();
-        return view('index', ['shop_cards' => $shop_cards], ['favorite_shops' => $favorite_shops]);
+
+        return view('index', [
+            'shop_cards' => $shop_cards,
+            'favorite_shops' => $favorite_shops,
+            'averageRatings' => $averageRatings
+        ]);
     }
 
     // ジャンル検索
     public function search_genre(Request $request)
     {
         $shop_cards = Shop::with('genres')->GenreSearch($request->genre_id)->get();
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
         $user = Auth::id();
         $favorite_shops = Like::where('user_id', $user)->get();
-        return view('index', ['shop_cards' => $shop_cards], ['favorite_shops' => $favorite_shops]);
+
+        return view('index', [
+            'shop_cards' => $shop_cards,
+            'favorite_shops' => $favorite_shops,
+            'averageRatings' => $averageRatings
+        ]);
     }
 
     // 店名検索
     public function search_name(Request $request)
     {
         $shop_cards = $shop_cards = Shop::KeywordSearch($request->name)->get();
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
         $user = Auth::id();
         $favorite_shops = Like::where('user_id', $user)->get();
 
         if ($shop_cards->isEmpty()) {
             return view('index', ['shop_cards' => $shop_cards, 'favorite_shops' => $favorite_shops, 'message' => 'データがありません']);
         } else {
-            return view('index', ['shop_cards' => $shop_cards, 'favorite_shops' => $favorite_shops]);
+            return view('index', [
+                'shop_cards' => $shop_cards,
+                'favorite_shops' => $favorite_shops,
+                'averageRatings' => $averageRatings
+            ]);
         }
     }
 
@@ -146,8 +226,7 @@ class ShopController extends Controller
     // }
 
     // 店舗管理：店舗情報の表示
-
-    public function shopmanage()
+    public function shopmanage(Request $request)
     {
         $shop_infos = Shop::paginate(10);
         return view('/manage/shop_manage', ['shop_infos' => $shop_infos]);
@@ -214,7 +293,6 @@ class ShopController extends Controller
         }
     }
 
-
     // レビュー投稿ページ表示
     public function review(Request $request)
     {
@@ -223,18 +301,27 @@ class ShopController extends Controller
         $shop_infos = Shop::where('id', $shop_id)->get();
         $reviews = ShopReview::where('shop_id', $shop_id)->where('user_id', $user)->get();
         $favorite_shops = Like::where('user_id', $user)->get();
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
 
         return view('review', [
             'shop_infos' => $shop_infos,
             'reviews' => $reviews,
-            'favorite_shops' => $favorite_shops
+            'favorite_shops' => $favorite_shops,
+            'averageRatings' => $averageRatings,
         ]);
     }
 
     // レビュー投稿
     public function review_post(ReviewRequest $request)
     {
-
         $review = $request->only([
             'stars',
             'comment',
@@ -244,7 +331,6 @@ class ShopController extends Controller
         $user = Auth::id();
         $shop_name = $review['shop_name'];
         $shop = Shop::Where('name', $shop_name)->first();
-
         $shop_id = $shop->id;
         $userReview = ShopReview::where('user_id', $user)->where('shop_id', $shop_id)->first();
 
@@ -252,9 +338,7 @@ class ShopController extends Controller
             return redirect()->back()->with('error_message-review', 'レビューは2回以上投稿できません');
         }
 
-
         $reservation = Reservation::with('shops')->Where('shop_id', $shop_id)->where('user_id', $user)->first();
-
 
         if ($reservation) {
             $reservationDate = $reservation->date;
@@ -266,21 +350,26 @@ class ShopController extends Controller
             if ($currentDate > $dateTime) {
                 $stars = $request->input('stars');
                 $comment = $request->input('comment');
+                $imageUrls = [];
 
                 // ファイルがアップロードされているかを確認
-                if ($request->hasFile('file') && $request->file('file')->isValid()) {
-                    $request->validate([
-                        'file' => 'image|mimes:jpg,png,jpeg|max:2048',
-                    ]);
+                if ($request->hasFile('files')) {
+                    Log::info('Files found');
+                    foreach ($request->file('files') as $file) {
+                        if ($file->isValid()) {
+                            $request->validate([
+                                'files.*' => 'image|mimes:jpg,png,jpeg|max:2048',
+                            ]);
 
-                    $file = $request->file('file');
-                    $fileName = $file->getClientOriginalName();
-                    $file->storeAs('public/images', $fileName);
-                    $imageUrl = Storage::url('public/images/' . $fileName);
-
-                } else {
-                    $imageUrl = '';
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs('public/images', $fileName);
+                            $imageUrls[] = Storage::url($filePath);
+                        }
+                    }
                 }
+
+                // 複数のファイルがアップロードされた場合の処理
+                $imageUrl = count($imageUrls) > 0 ? implode(',', $imageUrls) : '';
 
                 ShopReview::create([
                     'shop_id' => $shop_id,
@@ -299,18 +388,25 @@ class ShopController extends Controller
         }
     }
 
-
     // レビュー編集
     public function review_update(Request $request)
     {
         $user = Auth::id();
+        $user_role = Auth::user()->role;
         $stars = $request->input('stars');
         $comment = $request->input('comment');
         $review_id = $request->input('review_id');
-        ShopReview::where('id', $review_id)->where('user_id', $user)->update([
-            'stars' => $stars,
-            'comment' => $comment,
-        ]);
+
+        if ($user_role !== 'user') {
+            return back()->with('update_message', '投稿者以外は編集できません');
+        }
+
+        if ($user_role === 'user') {
+            ShopReview::where('id', $review_id)->where('user_id', $user)->update([
+                'stars' => $stars,
+                'comment' => $comment,
+            ]);
+        }
         return back()->with('update_message', 'レビューを更新しました');
     }
 
@@ -318,11 +414,15 @@ class ShopController extends Controller
     public function review_delete(Request $request)
     {
         $user = Auth::id();
+        $user_role = Auth::user()->role;
         $review_id = $request->input('review_id');
 
-        ShopReview::where('id', $review_id)->where('user_id', $user)->delete();
+        if ($user_role === 'admin') {
+            ShopReview::where('id', $review_id)->delete();
+        } else {
+            ShopReview::where('id', $review_id)->where('user_id', $user)->delete();
+        }
         return back()->with('delete_message', 'レビューを削除しました');
-
     }
 
 }

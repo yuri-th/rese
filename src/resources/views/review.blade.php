@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('js')
-<script src="https://unpkg.com/vue-star-rating/dist/VueStarRating.umd.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/review.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css"> -->
 
 @endsection
 
@@ -37,11 +37,18 @@
                         </form>
                     </div>
 
-                    <form class="form" action="/review" method="get">
-                        @csrf
-                        <div class="card__review"><button type="submit">review</button></div>
-                        <input type="hidden" name="shop_id" value="{{$shop_info->id}}" />
-                    </form>
+                    @if (isset($averageRatings[$shop_info->id]))
+            <div class="card__review">
+                <div id=averageStars class="star-rating" data-rating="{{ $averageRatings[$shop_info->id] }}">
+                    <star-rating :rating="{{ $averageRatings[$shop_info->id] }}" :increment="0.5" :max-rating="5"
+                        inactive-color="#c0c0c0" active-color="#daa520" :star-size="20" :show-rating="false"
+                        :padding="1" :read-only="true">
+                    </star-rating>
+                </div>
+            </div>
+            @else
+            <div class="card__review"><span>&emsp;</span></div>
+            @endif
                     <div class="card__button">
                         <form class="form" action="/detail/{{$shop_info->id}}" method="get">
                             @csrf
@@ -109,11 +116,10 @@
         <h3>体験を評価してください</h3>
         <form class="review-create" action="/review/post" method="post" enctype="multipart/form-data">
             @csrf
-            <!-- v-modelディレクティブを使用し、星評価の値を整数型としてバインド -->
-            <div id="app" class="star-rating">
-                <star-rating @rating-selected="setRating" v-bind:increment="1" v-bind:max-rating="5"
-                    inactive-color="#c0c0c0" active-color="#daa520" v-bind:star-size="40" :show-rating="false"
-                    v-model="rating" :padding="1">
+            <div id="ratingApp" class="star-rating">
+                <star-rating v-model="rating" :increment="1" :max-rating="5"
+                inactive-color="#c0c0c0" active-color="#daa520" :star-size="40" :show-rating="false"
+                :padding="1">
                 </star-rating>
                 <input type="hidden" name="stars" :value="rating" />
             </div>
@@ -127,8 +133,10 @@
             <p class="error-message">{{ $message }}</p>
             @enderror
             <h3>画像の追加</h3>
-            <div>
-                <input name="file" type="file" multiple />
+            <div class="upload-area" id="uploadArea">
+                <p>Clickして写真を追加</p>
+                <p>または画像をドラッグ＆ドロップ</p>
+                <input name="files[]" type="file" id="fileInput" multiple style="display: none;"/>
             </div>
 
             <div class="review-btn"><button type="submit">口コミを投稿</button></div>
@@ -137,20 +145,7 @@
     </div>
 </div>
 
-<script>
-    Vue.component('star-rating', VueStarRating.default);
-    let app = new Vue({
-        el: '#app',
-        data: {
-            rating: 0
-        },
-        methods: {
-            setRating: function (rating) {
-                this.rating = rating;
-            }
-        }
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.js"></script>
 <script src="{{ asset('js/review.js') }}"></script>
+<script src="{{ mix('js/starRating.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 @endsection

@@ -13480,11 +13480,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_0__);
 
 
-console.log('Vue:', vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
-console.log((vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default()));
 
-// Vue.component('star-rating', StarRating);
+// console.log('Vue:', Vue);
+// console.log(StarRating);
+
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('star-rating', (vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default()["default"]) || (vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default()));
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     console.log('DOMContentLoaded');
+//     document.querySelectorAll('.star-rating').forEach(function (el, index) {
+//         console.log('Element:', el, 'Index:', index);
+//         el.setAttribute('id', `averageStars${index}`);
+//         new Vue({
+//             el: `#averageStars${index}`,
+//             data: {
+//                 selectedRating: parseFloat(el.getAttribute('data-rating')),
+//                 isStarsChanged: false
+//             },
+//             methods: {
+//                 updateRating(rating) {
+//                     this.selectedRating = rating;
+//                     this.isStarsChanged = true;
+//                 }
+//             }
+//         });
+//     });
+// });
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     console.log('DOMContentLoaded');
+//     document.querySelectorAll('.star-rating').forEach(function (el, index) {
+//         console.log('Element:', el, 'Index:', index);
+//         el.setAttribute('id', `averageStars${index}`);
+//         new Vue({
+//             el: `#averageStars${index}`,
+//             data() {
+//                 return {
+//                     selectedRating: parseFloat(el.getAttribute('data-rating')),
+//                     isStarsChanged: false
+//                 };
+//             },
+//             methods: {
+//                 updateRating(rating) {
+//                     this.selectedRating = rating;
+//                     this.isStarsChanged = true;
+//                 }
+//             }
+//         });
+//     });
+// });
+
 document.addEventListener('DOMContentLoaded', function () {
   console.log('DOMContentLoaded');
   document.querySelectorAll('.star-rating').forEach(function (el, index) {
@@ -13492,13 +13537,15 @@ document.addEventListener('DOMContentLoaded', function () {
     el.setAttribute('id', "averageStars".concat(index));
     new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
       el: "#averageStars".concat(index),
-      data: {
-        selectedRating: parseFloat(el.getAttribute('data-rating')),
-        isStarsChanged: false
+      data: function data() {
+        return {
+          rating: parseFloat(el.getAttribute('data-rating')),
+          isStarsChanged: false
+        };
       },
       methods: {
         updateRating: function updateRating(rating) {
-          this.selectedRating = rating;
+          this.rating = rating;
           this.isStarsChanged = true;
         }
       }

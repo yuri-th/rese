@@ -141,6 +141,10 @@
     font-size: 1.6rem;
 }
 
+.review-image img{
+    width: 300px;
+}
+
 .other-user-post .star {
     margin-top: 10px;
 }

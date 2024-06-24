@@ -1,4 +1,4 @@
-// エリア検索・ジャンル検索・店名検索
+// ソート検索・エリア検索・ジャンル検索・店名検索
 
 $(document).ready(function () {
     $('#Sort_Select').keypress(function (e) {
@@ -7,7 +7,6 @@ $(document).ready(function () {
             $('#Sort_Form').submit();
         }
     });
-
 
     $('#Area_Select').keypress(function (e) {
         if (e.which === 13) {

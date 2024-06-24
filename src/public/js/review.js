@@ -1,42 +1,62 @@
-// Dropzone.autoDiscover = false;
-// $(document).ready(function () {
-//     var myDropzone = new Dropzone("#my-dropzone", {
-//         url: "/review/post",
-//         paramName: "file",
-//         maxFilesize: 2,
-//         addRemoveLinks: true,
-//         acceptedFiles: ".png,.jpg,.jpeg",
-//         headers: {
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-//         },
-//         dictDefaultMessage: "<p class='large-text'>クリックして写真を追加</p><p class='small-text'>またはドロッグアンドドロップ</p>",
-//     });
-// });
+document.addEventListener('DOMContentLoaded', () => {
 
+    // 画像アップロードエリアのイベントリスナー
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
 
+    if (!uploadArea || !fileInput) {
+        console.error('uploadAreaまたはfileInputが見つかりません。HTML構造を確認してください。');
+        return;
+    }
 
-// Dropzone.autoDiscover = false;
-// var myDropzone = new Dropzone(".dropzone", {
-//     // url: "{{ route('upload') }}",
-//     url: "/review/post",
-//     paramName: "file",
-//     required: true,
-//     maxFilesize: 2, // 最大ファイルサイズ（単位: MB）
-//     acceptedFiles: ".png,.jpg,.jpeg",
-//     addRemoveLinks: true,
-//     headers: {
-//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-//     },
-//     dictDefaultMessage: "<p class='large-text'>クリックして写真を追加</p><p class='small-text'>またはドロッグアンドドロップ</p>",
-// });
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
 
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
 
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
 
-document.getElementById('showAllReviews').addEventListener('click', function () {
-    var otherReviews = document.getElementById('otherReviews');
-    otherReviews.style.display = 'block'; // 他のユーザーのレビューを表示
+        const files = e.dataTransfer.files;
+        handleFiles(files);
+    });
 
-    // var userReviews = document.querySelector('.user-post');
-    // userReviews.style.display = 'none'; // ログインユーザーのレビューを非表示
+    uploadArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        const files = e.target.files;
+        handleFiles(files);
+    });
+
+    function handleFiles(files) {
+        console.log('Selected files:', files); // 選択されたファイルをコンソールに出力
+
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files[]', files[i]);
+        }
+
+        fetch('/review/post', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 });
 

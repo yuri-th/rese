@@ -21,7 +21,6 @@
     </form>
 </div>
 
-
 <div class="search__contents">
     <div class="area__search">
         <form class="form" action="/area" method="get" id="Area_Form">
@@ -128,23 +127,6 @@
     </div>
     @endforeach
 </div>
-
-<!-- <script>
-    Vue.component('star-rating', VueStarRating.default);
-    new Vue({
-        el: '#averageStars',
-        data: {
-        selectedRating: parseFloat(document.querySelector('#averageStars').getAttribute('data-rating')),
-        isStarsChanged: false
-        },
-        methods: {
-        updateRating(rating) {
-            this.selectedRating = rating;
-            this.isStarsChanged = true;
-        }
-    }
-    });
-</script> -->
 
 <script src="{{ asset('js/shop.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
