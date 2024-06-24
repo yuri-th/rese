@@ -38,8 +38,6 @@ class ShopController extends Controller
                 $averageRatings[$shop_id] = $ratings;
             }
         }
-        // デバッグ用: $averageRatings の内容をログに記録
-        \Log::info('Average Ratings: ', $averageRatings);
 
         return view('index', [
             'shop_cards' => $shop_cards,
@@ -52,7 +50,7 @@ class ShopController extends Controller
     {
         $user = Auth::id();
         $user_role = optional(Auth::user())->role;
-        Log::info('User Role:', ['role' => $user_role]);
+        // Log::info('User Role:', ['role' => $user_role]);
 
         $shop_record = Shop::where('id', $shop->id)->get();
         $other_reviews = '';
@@ -74,22 +72,57 @@ class ShopController extends Controller
         ]);
     }
 
-    // ソート検索
+    // 各種ソート検索
     public function search_sort(Request $request)
     {
         $sort = $request->input('sort', 'default');
+        $query = Shop::with('reviews');
+        // 評価のあるお店を取得してソート
+        $shop_cards_with_ratings = $query->get()->filter(function ($shop) {
+            return $shop->averageRating() > 0; // 評価があるお店のみをフィルタリング
+        });
 
         if ($sort === '2') {
-            $shop_cards = ShopReview::with('shop')
-                ->orderBy('stars', 'asc')
-                ->get();
-        } else {
-            $shop_cards = ShopReview::all();
+            $shop_cards_with_ratings = $shop_cards_with_ratings->sortByDesc(function ($shop) {
+                return $shop->averageRating();
+            });
+        } elseif ($sort === '3') {
+            $shop_cards_with_ratings = $shop_cards_with_ratings->sortBy(function ($shop) {
+                return $shop->averageRating();
+            });
+        }
+
+        // 評価のないお店を取得
+        $shop_cards_without_ratings = $query->get()->filter(function ($shop) {
+            return $shop->averageRating() === 0;
+        });
+
+        // 評価のあるお店の後に評価のないお店を追加
+        $shop_cards = $shop_cards_with_ratings->merge($shop_cards_without_ratings);
+
+        // ランダムソート
+        if ($sort === '1') {
+            $shop_cards = $shop_cards->shuffle();
         }
 
         $user = Auth::id();
         $favorite_shops = Like::where('user_id', $user)->get();
-        return view('index', ['shop_cards' => $shop_cards], ['favorite_shops' => $favorite_shops]);
+        $shop_ids = Shop::pluck('id');
+        $averageRatings = [];
+        foreach ($shop_ids as $shop_id) {
+            $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
+
+            if ($ratings !== null) {
+                $averageRatings[$shop_id] = $ratings;
+            }
+        }
+
+        return view('index', [
+            'shop_cards' => $shop_cards,
+            'favorite_shops' => $favorite_shops,
+            'sort' => $sort,
+            'averageRatings' => $averageRatings,
+        ]);
     }
 
     // エリア検索
@@ -260,7 +293,6 @@ class ShopController extends Controller
         }
     }
 
-
     // レビュー投稿ページ表示
     public function review(Request $request)
     {
@@ -290,7 +322,6 @@ class ShopController extends Controller
     // レビュー投稿
     public function review_post(ReviewRequest $request)
     {
-
         $review = $request->only([
             'stars',
             'comment',
@@ -300,7 +331,6 @@ class ShopController extends Controller
         $user = Auth::id();
         $shop_name = $review['shop_name'];
         $shop = Shop::Where('name', $shop_name)->first();
-
         $shop_id = $shop->id;
         $userReview = ShopReview::where('user_id', $user)->where('shop_id', $shop_id)->first();
 
@@ -308,9 +338,7 @@ class ShopController extends Controller
             return redirect()->back()->with('error_message-review', 'レビューは2回以上投稿できません');
         }
 
-
         $reservation = Reservation::with('shops')->Where('shop_id', $shop_id)->where('user_id', $user)->first();
-
 
         if ($reservation) {
             $reservationDate = $reservation->date;
@@ -342,7 +370,6 @@ class ShopController extends Controller
 
                 // 複数のファイルがアップロードされた場合の処理
                 $imageUrl = count($imageUrls) > 0 ? implode(',', $imageUrls) : '';
-                // dd($imageUrl);
 
                 ShopReview::create([
                     'shop_id' => $shop_id,
@@ -360,7 +387,6 @@ class ShopController extends Controller
             return redirect()->back()->with('error_message-null', 'ご予約情報が見つかりません');
         }
     }
-
 
     // レビュー編集
     public function review_update(Request $request)

@@ -66,7 +66,6 @@ Route::prefix('manage')->group(function () {
             Route::patch('/update', [ShopController::class, 'update']);
             Route::get('/update', [ShopController::class, 'update']);
             Route::get('/search', [ShopController::class, 'search_shop']);
-            // Route::post('logout', [ShopLoginController::class, 'destroy'])->name('shop.logout');
             Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('shop.logout');
         });
@@ -75,7 +74,6 @@ Route::prefix('manage')->group(function () {
         Route::get('/reserve_manage', [ReservationController::class, 'reserveManage']);
         Route::get('/reserve_manage/search', [ReservationController::class, 'search_reserve']);
         Route::post('/reserve_manage/mail', [ReservationController::class, 'mail']);
-        // Route::post('logout', [ShopLoginController::class, 'destroy'])->name('shop.logout');
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('shop.logout');
     });

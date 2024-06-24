@@ -1,12 +1,3 @@
-// document.getElementById('showAllReviews').addEventListener('click', function () {
-//     var otherReviews = document.getElementById('otherReviews');
-//     otherReviews.style.display = 'block'; // 他のユーザーのレビューを表示
-
-//     // var userReviews = document.querySelector('.user-post');
-//     // userReviews.style.display = 'none'; // ログインユーザーのレビューを非表示
-// });
-
-
 document.addEventListener('DOMContentLoaded', () => {
 
     // 画像アップロードエリアのイベントリスナー

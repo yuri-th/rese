@@ -21,7 +21,6 @@
     </form>
 </div>
 
-
 <div class="search__contents">
     <div class="area__search">
         <form class="form" action="/area" method="get" id="Area_Form">

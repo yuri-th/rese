@@ -73,5 +73,15 @@ class Shop extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'shop_reviews');
-    }    
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(ShopReview::class);
+    }
+
+    public function averageRating()
+    {
+        return $this->reviews()->avg('stars')?? 0;
+    }
 }
