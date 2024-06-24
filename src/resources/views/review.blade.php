@@ -133,12 +133,10 @@
             <p class="error-message">{{ $message }}</p>
             @enderror
             <h3>画像の追加</h3>
-            <div class="upload-area" id="uploadArea">
+            <div class="upload-area">
                 <p>Clickして写真を追加</p>
-                <p>または画像をドラッグ＆ドロップ</p>
                 <input name="files[]" type="file" id="fileInput" multiple style="display: none;"/>
             </div>
-
             <div class="review-btn"><button type="submit">口コミを投稿</button></div>
             <input type="hidden" name="shop_name" value="{{$shop_info->name}}" />
         </form>

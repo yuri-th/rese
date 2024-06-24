@@ -1,30 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    // 画像アップロードエリアのイベントリスナー
-    const uploadArea = document.getElementById('uploadArea');
+    const uploadArea = document.querySelector('.upload-area');
     const fileInput = document.getElementById('fileInput');
 
-    if (!uploadArea || !fileInput) {
-        console.error('uploadAreaまたはfileInputが見つかりません。HTML構造を確認してください。');
+    if (!fileInput || !uploadArea) {
+        console.error('fileInputが見つかりません。HTML構造を確認してください。');
         return;
     }
-
-    uploadArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadArea.classList.add('dragover');
-    });
-
-    uploadArea.addEventListener('dragleave', () => {
-        uploadArea.classList.remove('dragover');
-    });
-
-    uploadArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadArea.classList.remove('dragover');
-
-        const files = e.dataTransfer.files;
-        handleFiles(files);
-    });
 
     uploadArea.addEventListener('click', () => {
         fileInput.click();
