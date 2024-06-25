@@ -63,6 +63,7 @@ Route::prefix('manage')->group(function () {
         Route::middleware('auth:shop_manager')->group(function () {
             Route::get('/', [ShopController::class, 'shopmanage']);
             Route::post('/', [ShopController::class, 'create'])->name('shopmanage');
+            Route::post('/csv', [ShopController::class, 'import'])->name('shops.import');
             Route::patch('/update', [ShopController::class, 'update']);
             Route::get('/update', [ShopController::class, 'update']);
             Route::get('/search', [ShopController::class, 'search_shop']);

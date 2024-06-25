@@ -138,6 +138,20 @@ textarea {
     margin-left: 10px;
 }
 
+.csv_import{
+    text-align: center;
+    margin-top: 40px;
+}
+
+.csv-button button{
+    padding: 10px 70px;
+    margin-top: 30px;
+    font-size: 1.8rem;
+    border: none;
+    background: #0000cd;
+    color: #fff;
+}
+
 /* ----------------テーブル部分---------------- */
 
 .shop-list {
