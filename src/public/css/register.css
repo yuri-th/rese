@@ -32,7 +32,7 @@
     left: 0;
     width: 100%;
     height: 20%;
-    background: #0066ff;
+    background: #009699;
     border-radius: 5px 5px 0 0;
     z-index: 90;
 }
@@ -93,7 +93,7 @@
     font-size: 1.6rem;
     border: none;
     border-radius: 5px;
-    background: #0066ff;
+    background: #009699;
     color: #fff;
     cursor: pointer;
 }

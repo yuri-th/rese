@@ -28,7 +28,16 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
+// 一般公開ページ
+Route::get('/', [ShopController::class, 'index']);
+Route::get('/sort', [ShopController::class, 'search_sort']);
+Route::get('/area', [ShopController::class, 'search_area']);
+Route::get('/genre', [ShopController::class, 'search_genre']);
+Route::get('/shopname', [ShopController::class, 'search_name']);
+Route::get('/detail/{shop}', [ShopController::class, 'detail']);
+Route::get('/review', [ShopController::class, 'review']);
 
+// ユーザーページ
 Route::middleware('verified')->group(function () {
     Route::get('/thanks', [AuthController::class, 'thanks']);
     Route::post('/review/post', [ShopController::class, 'review_post']);
@@ -44,16 +53,10 @@ Route::middleware('verified')->group(function () {
         ->name('logout');
 });
 
-// 一般公開ページ
-Route::get('/', [ShopController::class, 'index']);
-Route::get('/sort', [ShopController::class, 'search_sort']);
-Route::get('/area', [ShopController::class, 'search_area']);
-Route::get('/genre', [ShopController::class, 'search_genre']);
-Route::get('/shopname', [ShopController::class, 'search_name']);
-Route::get('/detail/{shop}', [ShopController::class, 'detail']);
-Route::get('/review', [ShopController::class, 'review']);
+/*
+管理システム:店舗代表者、管理者のみログイン可
+*/
 
-// 管理システム
 // 店舗代表者用ルート
 Route::prefix('manage')->group(function () {
     Route::get('login', [ShopLoginController::class, 'create'])->name('shop.login');
@@ -103,7 +106,7 @@ Route::prefix('upload')->group(function () {
 // stripe決済
 Route::prefix('payment')->name('payment.')->group(function () {
     Route::get('/stripe', [PaymentController::class, 'create'])->name('create');
-    Route::post('/store', [PaymentController::class, 'store'])->name('');
+    Route::post('/store', [PaymentController::class, 'store'])->name('store');
 });
 
 

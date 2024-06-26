@@ -210,7 +210,7 @@
 .card__button--details {
     border: none;
     padding: 8px 12px;
-    background: #0066ff;
+    background: #009699;
     margin-bottom: 13px;
     display: inline-block;
     color: #fff;
@@ -227,7 +227,8 @@
 }
 
 .favorite {
-    color: red;
+    color: #d10300
+    ;
 }
 
 .not-favorite {

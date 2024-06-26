@@ -63,7 +63,7 @@ h2 {
     margin-bottom: 50px;
     font-size: 1.8rem;
     border: none;
-    background: #0000cd;
+    background: #009699;
     color: #fff;
 }
 
@@ -129,7 +129,7 @@ textarea {
     margin-top: 30px;
     font-size: 1.8rem;
     border: none;
-    background: #0000cd;
+    background: #009699;
     color: #fff;
 }
 
@@ -148,7 +148,7 @@ textarea {
     margin-top: 30px;
     font-size: 1.8rem;
     border: none;
-    background: #0000cd;
+    background: #009699;
     color: #fff;
 }
 
@@ -245,7 +245,7 @@ td {
     height: 30px;
     font-size: 1.6rem;
     color: #ffffff;
-    background-color: #0000cd;
+    background-color: #009699;
     border: none;
     border-radius: 5px;
 }
@@ -272,8 +272,8 @@ td {
 }
 
 .pagination .active {
-    background-color: #0066ff;
-    border: 1px solid #0066ff;
+    background-color: #006466;
+    border: 1px solid #006466;
     color: white;
 }
 

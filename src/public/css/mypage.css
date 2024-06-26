@@ -54,7 +54,7 @@
 .reservation__form {
     position: relative;
     margin-top: 35px;
-    background: #0066ff;
+    background: #00c9cc;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
     border-radius: 5px;
     color: #fff;
@@ -118,7 +118,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background-color: #0033ff;
+    background-color: #006466;
     border: none;
     border-radius: 0 0 5px 5px;
     color: #fff;
@@ -201,7 +201,7 @@
 .card__button--details {
     border: none;
     padding: 8px 12px;
-    background: #0066ff;
+    background: #009699;
     margin-bottom: 13px;
     display: inline-block;
     color: #fff;
@@ -218,7 +218,7 @@
 }
 
 .favorite {
-    color: red;
+    color: #d10300;
 }
 
 .not-favorite {
