@@ -6,7 +6,6 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/review.css') }}">
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css"> -->
 
 @endsection
 
@@ -116,7 +115,7 @@
         <h3>体験を評価してください</h3>
         <form class="review-create" action="/review/post" method="post" enctype="multipart/form-data">
             @csrf
-            <div id="ratingApp" class="star-rating">
+            <div id="ratingApp" class="star-rating-create">
                 <star-rating v-model="rating" :increment="1" :max-rating="5"
                 inactive-color="#c0c0c0" active-color="#daa520" :star-size="40" :show-rating="false"
                 :padding="1">

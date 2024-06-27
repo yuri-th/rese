@@ -81,13 +81,11 @@
                     <div class="review-comment">
                         <input type="text" name="comment" value="{{$review->comment}}" />
                     </div>
+                    @if(!empty($review->image_path))
                     <div class="review-image">
-                    @if(isset($review->image_path))
                     <img src="{{ asset($review->image_path) }}" alt="Review Image">
-                    @else
-                    <p>No image available</p>
-                    @endif
                     </div>
+                    @endif
                     <input type="hidden" name="review_id" value="{{$review->id}}" />
                     <button type="submit" class="edit_btn">口コミを編集</button>
                 </form>
@@ -111,6 +109,11 @@
                 <div class="review-comment">
                     {{$other_review->comment}}
                 </div>
+                    @if(!empty($other_review->image_path))
+                    <div class="review-image">
+                        <img src="{{ asset($other_review->image_path) }}" alt="Review Image">
+                    </div>
+                    @endif
                 @endforeach
                 @endif
             </div>

@@ -33,9 +33,16 @@ class ShopController extends Controller
             // 各店舗の評価を取得して平均評価を計算
             $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
 
-            // 結果がnullでない場合のみ配列に格納
+            // デバッグ出力
+            // logger("Shop ID: $shop_id");
+            // logger("Ratings: " . json_encode($ratings));
+
+            // if ($ratings !== null) {
+            //     $averageRatings[$shop_id] = $ratings;
+            // }
+            // 平均評価を小数点第一位までにする
             if ($ratings !== null) {
-                $averageRatings[$shop_id] = $ratings;
+                $averageRatings[$shop_id] = round($ratings, 1);
             }
         }
 
