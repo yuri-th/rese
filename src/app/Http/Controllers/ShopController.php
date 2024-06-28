@@ -15,7 +15,7 @@ use App\Http\Requests\ShopRequest;
 use App\Http\Requests\ReviewRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Validator;
 
 
 class ShopController extends Controller
@@ -30,12 +30,15 @@ class ShopController extends Controller
         $shop_ids = Shop::pluck('id');
         $averageRatings = [];
         foreach ($shop_ids as $shop_id) {
-            // 各店舗の評価を取得して平均評価を計算
             $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
 
-            // 結果がnullでない場合のみ配列に格納
+            // デバッグ出力
+            // logger("Shop ID: $shop_id");
+            // logger("Ratings: " . json_encode($ratings));
+
+            // 平均評価を小数点第一位までにする
             if ($ratings !== null) {
-                $averageRatings[$shop_id] = $ratings;
+                $averageRatings[$shop_id] = round($ratings, 1);
             }
         }
 
@@ -195,36 +198,6 @@ class ShopController extends Controller
         }
     }
 
-    //店舗画像の追加・表示
-    // public function upload(Request $request)
-    // {
-    // $request->validate([
-    //     'file' => 'required|image|mimes:jpeg,png|max:2048',
-    // ]);
-
-    // if ($request->file('file')) {
-    //     $file = $request->file('file');
-    //     $fileName = time() . '-' . $file->getClientOriginalName();
-    //     $file->storeAs('images', $fileName, 'public');
-    // }
-
-    // ファイルの保存が成功した場合の処理を追加
-
-    // return response()->json(['success' => 'アップロードが成功しました']);
-    // }
-    // public function upload()
-    // {   
-    //     return view('/upload/upload');
-    // }
-
-    // public function upload_image(Request $request)
-    // {   
-    //     $dir = 'images';
-    //     $file_name = $request->file('image')->getClientOriginalName();
-    //     $request->file('image')->storeAs('public/' . $dir, $file_name);
-    //     return redirect('/upload/upload');
-    // }
-
     // 店舗管理：店舗情報の表示
     public function shopmanage(Request $request)
     {
@@ -249,6 +222,105 @@ class ShopController extends Controller
 
         Shop::create($info);
         return redirect('/manage/shop_manage')->with('new_message', '店舗情報を作成しました');
+    }
+
+    // CSVインポート（店舗情報）
+    public function import(Request $request)
+    {
+        if (!$request->hasFile('file')) {
+            return redirect('/manage/shop_manage')->with('error_message', 'ファイルがアップロードされていません');
+        }
+
+        $file = $request->file('file');
+        $validator = Validator::make(
+            ['file' => $file],
+            ['file' => 'required|mimes:csv,txt|max:2048']
+        );
+
+        if ($validator->fails()) {
+            return redirect('/manage/shop_manage')->withErrors($validator)->with('error_message', 'ファイルが無効です');
+        }
+
+        $filePath = $file->getRealPath();
+        $file = fopen($filePath, 'r');
+        $header = fgetcsv($file);
+
+        $successCount = 0;
+        $errorCount = 0;
+        $errors = [];
+
+        while ($row = fgetcsv($file)) {
+            if (count($header) !== count($row)) {
+                $errorCount++;
+                $errors[] = $row;
+                continue;
+            }
+
+            $shopData = array_combine($header, $row);
+
+            // 地域の値を変換するマッピング配列
+            $areaMap = [
+                '東京' => '東京都',
+                '大阪' => '大阪府',
+                '福岡' => '福岡県'
+            ];
+
+            // 地域の値を変換
+            if (isset($areaMap[$shopData['地域']])) {
+                $shopData['地域'] = $areaMap[$shopData['地域']];
+            }
+
+            $isNameValid = strlen($shopData['店舗名']) <= 50;
+            $isAreaValid = in_array($shopData['地域'], ['東京都', '大阪府', '福岡県']);
+            $isGenreValid = in_array($shopData['ジャンル'], ['寿司', '焼肉', 'イタリアン', '居酒屋', 'ラーメン']);
+            $isDescriptionValid = strlen($shopData['店舗概要']) <= 400;
+            $isImageUrlValid = in_array(pathinfo($shopData['画像URL'], PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']);
+
+            // Log::debug('Validation results:', [
+            //     'name' => $isNameValid,
+            //     'area' => $isAreaValid,
+            //     'genre' => $isGenreValid,
+            //     'description' => $isDescriptionValid,
+            //     'image_url' => $isImageUrlValid,
+            //     'row_data' => $shopData
+            // ]);
+
+            if ($isNameValid && $isAreaValid && $isGenreValid && $isDescriptionValid && $isImageUrlValid) {
+                try {
+                    $area = Area::where('name', $shopData['地域'])->first();
+                    $genre = Genre::where('name', $shopData['ジャンル'])->first();
+
+                    if ($area && $genre) {
+                        Shop::create([
+                            'name' => $shopData['店舗名'],
+                            'area_id' => $area->id,
+                            'genre_id' => $genre->id,
+                            'description' => $shopData['店舗概要'],
+                            'image_url' => $shopData['画像URL']
+                        ]);
+                        $successCount++;
+                    } else {
+                        throw new \Exception('Area or Genre not found');
+                    }
+                } catch (\Exception $e) {
+                    // Log::error('Shop creation failed for row: ' . json_encode($shopData) . ' with error: ' . $e->getMessage());
+                    $errorCount++;
+                    $errors[] = $shopData;
+                }
+            } else {
+                // Log::warning('Validation failed for row: ' . json_encode($shopData));
+                $errorCount++;
+                $errors[] = $shopData;
+            }
+        }
+
+        fclose($file);
+
+        if ($errorCount > 0) {
+            return redirect('/manage/shop_manage')->with('error_message', '店舗情報データは条件を満たせずインポートできません')->withErrors($errors);
+        } else {
+            return redirect('/manage/shop_manage')->with('new_message', '全ての店舗情報をインポートしました');
+        }
     }
 
     // 店舗情報の更新

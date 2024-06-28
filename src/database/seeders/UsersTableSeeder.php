@@ -14,9 +14,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-
         $param = [
-            'name' => '岡本太郎',
+            'name' => '岡本たろう',
             'email' => 'taro@example.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12312312'),
@@ -32,6 +31,14 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert($param);
 
         $param = [
+            'name' => '山田はなこ',
+            'email' => 'hanako@example.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('12312312'),
+        ];
+        DB::table('users')->insert($param);
+
+        $param = [
             'name' => '管理者',
             'email' => 'admin@example.com',
             'email_verified_at' => now(),
@@ -40,5 +47,4 @@ class UsersTableSeeder extends Seeder
         ];
         DB::table('users')->insert($param);
     }
-
 }

@@ -24,7 +24,7 @@ class CreateManagersTable extends Migration
             $table->string('tel', 11);
             $table->string('email', 255)->unique();
             $table->timestamp('created_at')->useCurrent()->nullable();
-            $table->timestamp('updated_at')->useCurrent()->nullable();       
+            $table->timestamp('updated_at')->useCurrent()->nullable();
         });
     }
 

@@ -12,8 +12,6 @@
     <script src="https://kit.fontawesome.com/dbdf1c424a.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <!-- <script src="https://unpkg.com/vue-star-rating/dist/VueStarRating.umd.min.js"></script> -->
-    <!-- <script src="{{ mix('js/starRating.js') }}" defer></script> -->
     @yield('css')
     @yield('js')
 </head>

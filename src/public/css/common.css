@@ -60,7 +60,7 @@ li {
 }
 
 .header__logo {
-    color: #0066ff;
+    color: #009699;
     text-decoration: none;
     font-family: Arial;
     font-weight: 700;
@@ -77,7 +77,7 @@ li {
 .header__nav--button {
     border: none;
     background: none;
-    color: #0066ff;
+    color: #006466;
     font-size: 35px;
     font-family: inherit;
     font-weight: 900;
@@ -94,7 +94,7 @@ li {
     display: flex;
     height: 46px;
     width: 46px;
-    background: #0066ff;
+    background: #006466;
     box-shadow: 3px 3px 3px #a9a9a9;
     border-radius: 8px;
     justify-content: center;
@@ -165,7 +165,7 @@ li {
 
 .header__nav--link,
 .header__nav--button {
-    color: #0066ff;
+    color: #009699;
     font-size: 3.5rem;
     font-family: Arial;
     font-weight: 700;

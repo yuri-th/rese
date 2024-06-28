@@ -6,7 +6,6 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/review.css') }}">
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css"> -->
 
 @endsection
 
@@ -116,7 +115,7 @@
         <h3>体験を評価してください</h3>
         <form class="review-create" action="/review/post" method="post" enctype="multipart/form-data">
             @csrf
-            <div id="ratingApp" class="star-rating">
+            <div id="ratingApp" class="star-rating-create">
                 <star-rating v-model="rating" :increment="1" :max-rating="5"
                 inactive-color="#c0c0c0" active-color="#daa520" :star-size="40" :show-rating="false"
                 :padding="1">
@@ -133,12 +132,10 @@
             <p class="error-message">{{ $message }}</p>
             @enderror
             <h3>画像の追加</h3>
-            <div class="upload-area" id="uploadArea">
+            <div class="upload-area">
                 <p>Clickして写真を追加</p>
-                <p>または画像をドラッグ＆ドロップ</p>
                 <input name="files[]" type="file" id="fileInput" multiple style="display: none;"/>
             </div>
-
             <div class="review-btn"><button type="submit">口コミを投稿</button></div>
             <input type="hidden" name="shop_name" value="{{$shop_info->name}}" />
         </form>

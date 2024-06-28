@@ -9,8 +9,8 @@ class AdminsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
      * @return void
+     * 管理者用管理システムログイン情報
      */
     public function run()
     {

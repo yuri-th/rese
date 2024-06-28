@@ -25,7 +25,7 @@ body {
 }
 
 .card-info {
-    border: #cccccc solid 1px;
+    border: #009699 solid 1px;
     border-radius: 10px;
     padding: 20px 30px;
     position: relative;
@@ -33,15 +33,16 @@ body {
 
 .card-header {
     text-align: center;
-    background-color: #cccccc;
-    border: #cccccc solid 1px;
-    border: none;
+    background-color: #009699;
+    border: #009699 solid 1px;
+    /* border: none; */
     position: absolute;
     left: 0;
     top: 0;
     border-radius: 10px 10px 0 0;
     width: 100%;
     padding: 15px;
+    color:#fff;
 }
 
 .card-body {
@@ -56,16 +57,22 @@ body {
     border-radius: 5px;
 }
 
+.btn_container{
+    text-align: center;
+}
+
 .pay_btn {
     margin-top: 20px;
     padding: 10px 25px;
     border-radius: 10px;
     border: none;
-    background: #cccccc;
+    background: #009699;
     font-size: 1.6rem;
+    color:#fff;
 }
 
 .alert {
     text-align: center;
     color: blue;
+    margin-bottom: 30px;
 }
