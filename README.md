@@ -2,11 +2,10 @@
 ある企業のグループ会社の飲食店予約サービス<br>
 
 ◆ユーザーページ<br>
-
 <img src="https://github.com/yuri-th/rese/assets/117786989/551cff24-76d2-41d6-847c-75d0b8645c59" width="800" alt="user_page"><br>
 
 ◆店舗情報管理ページ<br>
-<img src="https://github.com/yuri-th/rese/assets/117786989/294011dc-f0cf-48c9-8b4a-a05b16023fe3"　width="800" alt="shop_manager_page"><br>
+<img src="https://github.com/yuri-th/rese/assets/117786989/294011dc-f0cf-48c9-8b4a-a05b16023fe3" width="800" alt="shop_manager"><br>
 
 ◆店舗代表者管理ページ<br>
 <img src="https://github.com/yuri-th/rese/assets/117786989/970b46e0-e830-45f6-af83-0fd765a4c7cc" width="800" alt="admin_page"><br>
