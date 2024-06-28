@@ -6,7 +6,7 @@
 <img src="https://github.com/yuri-th/rese/assets/117786989/551cff24-76d2-41d6-847c-75d0b8645c59" width="800" alt="user_page"><br>
 
 ◆店舗情報管理ページ<br>
-<img src="https://github.com/yuri-th/rese/assets/117786989/294011dc-f0cf-48c9-8b4a-a05b16023fe3"　width="800" alt="shop_manager_page" ><br>
+<img src="https://github.com/yuri-th/rese/assets/117786989/294011dc-f0cf-48c9-8b4a-a05b16023fe3"　width="800" alt="shop_manager_page"><br>
 
 ◆店舗代表者管理ページ<br>
 <img src="https://github.com/yuri-th/rese/assets/117786989/970b46e0-e830-45f6-af83-0fd765a4c7cc" width="800" alt="admin_page"><br>
@@ -31,8 +31,8 @@ HTML/CSS/PHP/JavaScript/Laravel (v8)/Vue.js/MySQL/Docker<br>
 ## ER図<br><br>
 
 ## 環境構築<br>
-・プロジェクトをコピーしたいディレクトリにて「git clone <https://github.com/yuri-th/advanced_exam.git>」を行いプロジェクトをコピー<br>
-・「cd advanced_exam/src」を行い.env.example のあるディレクトリに移動<br>
+・プロジェクトをコピーしたいディレクトリにて「git clone <https://github.com/yuri-th/rese.git>」を行いプロジェクトをコピー<br>
+・「cd rese/src」を行い.env.example のあるディレクトリに移動<br>
 ・.env.example をコピーし.env を作成<br>
 ・.env の DB_DATABASE=laravel_db DB_USERNAME=laravel_user DB_PASSWORD=laravel_pass を記載<br>
 ・docker-compose.yml の存在するディレクトリにて「docker-compose up -d --build」<br>
