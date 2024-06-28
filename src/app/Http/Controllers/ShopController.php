@@ -30,16 +30,12 @@ class ShopController extends Controller
         $shop_ids = Shop::pluck('id');
         $averageRatings = [];
         foreach ($shop_ids as $shop_id) {
-            // 各店舗の評価を取得して平均評価を計算
             $ratings = ShopReview::where('shop_id', $shop_id)->pluck('stars')->avg();
 
             // デバッグ出力
             // logger("Shop ID: $shop_id");
             // logger("Ratings: " . json_encode($ratings));
 
-            // if ($ratings !== null) {
-            //     $averageRatings[$shop_id] = $ratings;
-            // }
             // 平均評価を小数点第一位までにする
             if ($ratings !== null) {
                 $averageRatings[$shop_id] = round($ratings, 1);
@@ -201,36 +197,6 @@ class ShopController extends Controller
             ]);
         }
     }
-
-    //店舗画像の追加・表示
-    // public function upload(Request $request)
-    // {
-    // $request->validate([
-    //     'file' => 'required|image|mimes:jpeg,png|max:2048',
-    // ]);
-
-    // if ($request->file('file')) {
-    //     $file = $request->file('file');
-    //     $fileName = time() . '-' . $file->getClientOriginalName();
-    //     $file->storeAs('images', $fileName, 'public');
-    // }
-
-    // ファイルの保存が成功した場合の処理を追加
-
-    // return response()->json(['success' => 'アップロードが成功しました']);
-    // }
-    // public function upload()
-    // {   
-    //     return view('/upload/upload');
-    // }
-
-    // public function upload_image(Request $request)
-    // {   
-    //     $dir = 'images';
-    //     $file_name = $request->file('image')->getClientOriginalName();
-    //     $request->file('image')->storeAs('public/' . $dir, $file_name);
-    //     return redirect('/upload/upload');
-    // }
 
     // 店舗管理：店舗情報の表示
     public function shopmanage(Request $request)

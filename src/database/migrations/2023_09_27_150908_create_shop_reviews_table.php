@@ -18,10 +18,10 @@ class CreateShopReviewsTable extends Migration
             $table->unsignedBigInteger('shop_id');
             $table->unsignedBigInteger('user_id');
             $table->integer('stars')->default(0);
-            $table->string('comment',400);
+            $table->string('comment', 400);
             $table->string('image_path')->nullable();
             $table->timestamp('created_at')->useCurrent()->nullable();
-            $table->timestamp('updated_at')->useCurrent()->nullable();       
+            $table->timestamp('updated_at')->useCurrent()->nullable();
         });
     }
 

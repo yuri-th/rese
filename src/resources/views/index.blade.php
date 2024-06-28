@@ -95,7 +95,6 @@
             <div class="card__review"><span>&emsp;</span></div>
             @endif
 
-
             <div class="card__button">
                 <form class="form" action="/detail/{{$shop_card->id}}" method="get">
                     @csrf

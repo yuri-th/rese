@@ -20,7 +20,6 @@ class PaymentController extends Controller
                 'amount' => 3000,
                 'currency' => 'jpy',
                 'payment_method_types' => ['card'],
-                // 'payment_method' => $request->stripeToken,
                 'payment_method_data' => [
                     'type' => 'card',
                     'card' => [
@@ -32,7 +31,7 @@ class PaymentController extends Controller
 
             return back()->with('status', '決済が完了しました！');
         } catch (\Stripe\Exception\CardException $e) {
-            // カードに関するエラーが発生した場合
+            // カードに関するエラー
             return back()->with('flash_alert', '決済に失敗しました！(' . $e->getMessage() . ')');
         } catch (\Stripe\Exception\InvalidRequestException $e) {
             // リクエストが無効な場合のエラー
