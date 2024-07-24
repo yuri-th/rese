@@ -25,7 +25,9 @@
 ## 使用言語、フレームワーク、DBなど<br>
 HTML/CSS/PHP/JavaScript/Laravel (v8)/Vue.js/MySQL/Docker<br>
 
-## テーブル設計<br><br>
+## テーブル設計<br>
+<img width="400" alt="rese_table01" src="https://github.com/user-attachments/assets/70dcc434-22de-4369-8935-87a214591c8d">
+<br>
 
 ## ER図<br><br>
 
