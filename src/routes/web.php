@@ -59,25 +59,26 @@ Route::middleware('verified')->group(function () {
 
 // 店舗代表者用ルート
 Route::prefix('manage')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('shop.login');
+    });
     Route::get('login', [ShopLoginController::class, 'create'])->name('shop.login');
     Route::post('login', [ShopLoginController::class, 'store']);
 
-    Route::prefix('shop_manage')->group(function () {
-        Route::middleware('auth:shop_manager')->group(function () {
+    Route::middleware('auth:shop_manager')->group(function () {
+        Route::prefix('shop_manage')->group(function () {
             Route::get('/', [ShopController::class, 'shopmanage']);
             Route::post('/', [ShopController::class, 'create'])->name('shopmanage');
             Route::post('/csv', [ShopController::class, 'import'])->name('shops.import');
             Route::patch('/update', [ShopController::class, 'update']);
             Route::get('/update', [ShopController::class, 'update']);
             Route::get('/search', [ShopController::class, 'search_shop']);
-            Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->name('shop.logout');
         });
-    });
-    Route::middleware('auth:shop_manager')->group(function () {
+
         Route::get('/reserve_manage', [ReservationController::class, 'reserveManage']);
         Route::get('/reserve_manage/search', [ReservationController::class, 'search_reserve']);
         Route::post('/reserve_manage/mail', [ReservationController::class, 'mail']);
+
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('shop.logout');
     });

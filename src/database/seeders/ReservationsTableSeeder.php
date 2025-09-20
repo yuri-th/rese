@@ -18,7 +18,7 @@ class ReservationsTableSeeder extends Seeder
             'shop_id' => '1',
             'user_id' => '1',
             'num_of_users' => '1',
-            'date' => '2024-02-15',
+            'date' => '2025-09-30',
             'start_at' => '18:00:00',
         ];
         DB::table('reservations')->insert($param);
@@ -27,7 +27,7 @@ class ReservationsTableSeeder extends Seeder
             'shop_id' => '2',
             'user_id' => '1',
             'num_of_users' => '3',
-            'date' => '2024-03-15',
+            'date' => '2025-10-01',
             'start_at' => '18:00:00',
         ];
         DB::table('reservations')->insert($param);
@@ -36,7 +36,7 @@ class ReservationsTableSeeder extends Seeder
             'shop_id' => '1',
             'user_id' => '2',
             'num_of_users' => '2',
-            'date' => '2024-04-15',
+            'date' => '2025-10-15',
             'start_at' => '18:00:00',
         ];
         DB::table('reservations')->insert($param);
@@ -45,7 +45,7 @@ class ReservationsTableSeeder extends Seeder
             'shop_id' => '2',
             'user_id' => '2',
             'num_of_users' => '6',
-            'date' => '2024-05-20',
+            'date' => '2025-10-25',
             'start_at' => '18:00:00',
         ];
         DB::table('reservations')->insert($param);
@@ -54,7 +54,7 @@ class ReservationsTableSeeder extends Seeder
             'shop_id' => '10',
             'user_id' => '3',
             'num_of_users' => '3',
-            'date' => '2024-05-22',
+            'date' => '2024-10-31',
             'start_at' => '19:00:00',
         ];
         DB::table('reservations')->insert($param);
@@ -63,7 +63,7 @@ class ReservationsTableSeeder extends Seeder
             'shop_id' => '1',
             'user_id' => '3',
             'num_of_users' => '2',
-            'date' => '2024-06-20',
+            'date' => '2025-11-01',
             'start_at' => '18:00:00',
         ];
         DB::table('reservations')->insert($param);
