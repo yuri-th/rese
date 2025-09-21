@@ -54,6 +54,8 @@ HTML/CSS/PHP/JavaScript/Laravel (v8)/Vue.js/MySQL/Docker<br>
 お知らせメール、リマインダーメールにはStripe決済リンクがあります。<br>
 
 ## 追記事項<br>
+・Appleシリコン（M1/M2/M3）ユーザーへの対応として、一部のDockerイメージがARM64版を提供していないため、
+「linux/amd64」を指定しています。
 ・予約の削除はマイページの予約テーブルの×印を押すとできます。（予約日の前日までキャンセル可）<br>
 ・stripe決済は、<br>
   カード番号: 4242 4242 4242 4242<br>
