@@ -3,6 +3,7 @@ version: '3.8'
 services:
     nginx:
         image: nginx:1.21.1
+        platform: linux/amd64
         ports:
             - "80:80"
         volumes:
@@ -18,6 +19,7 @@ services:
 
     mysql:
         image: mysql:8.0.26
+        platform: linux/amd64
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: laravel_db
@@ -26,7 +28,7 @@ services:
         command:
             mysqld --default-authentication-plugin=mysql_native_password
         volumes:
-            - ./docker/mysql/data:/var/lib/mysql
+            - mysql_data:/var/lib/mysql
             - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
 
     phpmyadmin:
@@ -43,6 +45,10 @@ services:
 
     mailhog:
         image: mailhog/mailhog
+        platform: linux/amd64
         ports:
         - "8025:8025"
         - "1025:1025"
+
+volumes:
+    mysql_data:
