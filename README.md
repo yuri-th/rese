@@ -47,15 +47,15 @@ HTML/CSS/PHP/JavaScript/Laravel (v8)/Vue.js/MySQL/Docker<br>
 
 以上でアプリの使用が可能です。<br>
 *「localhost/」にて店舗一覧ページが開きます。<br>
-*「localhost/manage/manager_manage/」で管理者ログイン画面が開きます。
+*「localhost/manage/manager_manage/」で管理者ログイン画面が開きます。<br>
 *「localhost/manage/」で店舗代表者ログイン画面が開きます。<br>
 認証メール、お知らせメール、リマインダーメールはMailHogに届きます。<br>
 リマインダーメールは予約日の当日9:00に届きます。<br>
 お知らせメール、リマインダーメールにはStripe決済リンクがあります。<br>
 
 ## 追記事項<br>
-・Appleシリコン（M1/M2/M3）ユーザーへの対応として、一部のDockerイメージがARM64版を提供していないため、
-「linux/amd64」を指定しています。
+・Appleシリコン（M1/M2/M3）ユーザーへの対応として、一部のDockerイメージがARM64版を提供していないため、<br>
+「linux/amd64」を指定しています。<br>
 ・予約の削除はマイページの予約テーブルの×印を押すとできます。（予約日の前日までキャンセル可）<br>
 ・stripe決済は、<br>
   カード番号: 4242 4242 4242 4242<br>
