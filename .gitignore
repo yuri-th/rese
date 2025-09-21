@@ -1,0 +1,55 @@
+# Laravel (src/ フォルダ内)
+src/node_modules
+src/public/hot
+src/public/storage
+src/storage/*.key
+src/vendor
+src/.env
+src/.env.backup
+src/.phpunit.result.cache
+src/Homestead.json
+src/Homestead.yaml
+src/npm-debug.log
+src/yarn-error.log
+src/.idea
+src/.vscode
+src/*.log
+src/tmp/
+
+# Docker設定
+docker-compose.override.yml
+
+# Docker & Database
+docker/mysql/data/
+mysql-data/
+db_data/
+
+# MySQL files
+*.ibd
+*.frm
+*.MYD
+*.MYI
+*.opt
+*.dblwr
+*.ibt
+binlog.*
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows  
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
